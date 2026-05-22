@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  
+  /* Keraton Colors */
+  --color-keraton-yellow: #facc15; /* yellow-400 */
+  --color-keraton-gold: #eab308; /* yellow-500 */
+  --color-keraton-black: #0a0a0a; /* neutral-950 */
+}
+
+.bg-keraton-pattern {
+  background-color: #0a0a0a;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23facc15' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* === SEPIA MODE (NASKAH KUNO) OVERRIDES === */
+body.theme-sepia {
+  background-color: #f4ecd8 !important; /* Kertas perkamen */
+  color: #3e2723 !important; /* Tinta cokelat tua */
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%235d4037' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") !important;
+}
+
+/* Override utility classes explicitly for Sepia Mode */
+body.theme-sepia .bg-black { background-color: transparent !important; }
+body.theme-sepia .mega-menu { background-color: #f4ecd8 !important; }
+body.theme-sepia .bg-neutral-900, body.theme-sepia .bg-neutral-950,
+body.theme-sepia .bg-gray-900, body.theme-sepia .bg-gray-900\/50,
+body.theme-sepia .bg-black\/50, body.theme-sepia .bg-rose-950\/40,
+body.theme-sepia .bg-indigo-950\/40 { background-color: #e8dfc8 !important; }
+
+body.theme-sepia .text-white, body.theme-sepia .text-gray-200, body.theme-sepia .text-gray-300, body.theme-sepia .text-gray-400, body.theme-sepia .text-yellow-100 { color: #3e2723 !important; }
+body.theme-sepia .text-yellow-400, body.theme-sepia .text-yellow-500, body.theme-sepia .text-yellow-600,
+body.theme-sepia .text-rose-400, body.theme-sepia .text-indigo-400 { color: #8b0000 !important; } /* Keraton Red */
+
+body.theme-sepia .border-yellow-400, body.theme-sepia .border-yellow-500 { border-color: #8b0000 !important; }
+body.theme-sepia .border-gray-800, body.theme-sepia .border-gray-900, body.theme-sepia .border-gray-700,
+body.theme-sepia .border-rose-800, body.theme-sepia .border-indigo-800 { border-color: #d7ccc8 !important; }
+
+body.theme-sepia .bg-yellow-400, body.theme-sepia .bg-yellow-500 { background-color: #8b0000 !important; color: #f4ecd8 !important; }
+body.theme-sepia .hover\:text-yellow-400:hover, body.theme-sepia .hover\:text-black:hover { color: #b71c1c !important; }
+body.theme-sepia .hover\:border-yellow-400:hover { border-color: #b71c1c !important; }
+
+/* Custom overrides for AudioPlayer in Sepia Mode */
+body.theme-sepia .audio-player-btn:not(.bg-yellow-500) { 
+  background-color: #e8dfc8 !important; 
+  border-color: #8b0000 !important;
+  color: #8b0000 !important;
+}
+
+/* Custom Thin Scrollbar for Horizontal Timelines */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155; /* gray-700 */
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #eab308; /* yellow-500 */
+}
+body.theme-sepia .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d7ccc8;
+}
+body.theme-sepia .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #8b0000;
+}
+
+/* Article typography overrides in Sepia Mode */
+body.theme-sepia .article-content { color: #3e2723 !important; }
+body.theme-sepia .article-content p { color: #3e2723 !important; }
+body.theme-sepia .article-content h2, body.theme-sepia .article-content h3 { color: #8b0000 !important; border-bottom-color: #d7ccc8 !important; }
+body.theme-sepia .article-content strong { color: #8b0000 !important; }
+body.theme-sepia img { filter: sepia(0.8) contrast(1.2) !important; mix-blend-mode: multiply !important; }
+
+/* Base styles for HTML content in articles */
+.article-content {
+  font-family: var(--font-serif);
+  color: #e5e5e5; /* neutral-200 */
+}
+
+/* Force override any inline styles pasted from Word/Internet to ensure consistent Keraton look */
+.article-content * {
+  font-family: inherit !important;
+}
+
+.article-content p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+  font-size: 1.125rem; /* text-lg */
+  text-align: justify !important; 
+  word-wrap: break-word;
+}
+
+@media (min-width: 768px) {
+  .article-content p {
+    font-size: 1.25rem; /* text-xl */
+    line-height: 1.85;
+    margin-bottom: 2rem;
+  }
+}
+
+.article-content h2, .article-content h3 {
+  font-family: var(--font-serif);
+  font-size: 2rem; /* text-4xl */
+  font-weight: 700;
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+  color: #facc15; /* keraton yellow */
+  line-height: 1.3;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.5rem;
+}
+
+.article-content ol, .article-content ul {
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #e5e5e5;
+}
+
+.article-content li {
+  margin-bottom: 0.75rem;
+}
+
+.article-content strong {
+  font-weight: 700;
+  color: #facc15; /* Highlight strong tags in yellow */
+}
+
+.article-content em {
+  font-style: italic;
+}

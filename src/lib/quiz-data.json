@@ -1,0 +1,42 @@
+{
+  "questions": [
+    {
+      "id": "1",
+      "text": "Siapakah pendiri Kesultanan Demak yang juga merupakan ayah dari Sunan Prawoto?",
+      "options": [
+        "Sultan Trenggana",
+        "Raden Patah",
+        "Adipati Unus",
+        "Arya Penangsang"
+      ],
+      "correctOptionIndex": 0
+    },
+    {
+      "id": "2",
+      "text": "Kerajaan Islam manakah yang didirikan oleh Jaka Tingkir setelah runtuhnya Demak?",
+      "options": [
+        "Mataram Islam",
+        "Pajang",
+        "Pengging",
+        "Cirebon"
+      ],
+      "correctOptionIndex": 1
+    }
+  ],
+  "results": [
+    {
+      "playerName": "Rokan",
+      "score": 1,
+      "totalQuestions": 2,
+      "id": "1779321360541",
+      "date": "21 Mei 2026, 06.56"
+    },
+    {
+      "playerName": "kbk",
+      "score": 0,
+      "totalQuestions": 2,
+      "id": "1779327673016",
+      "date": "21 Mei 2026, 08.41"
+    }
+  ]
+}
