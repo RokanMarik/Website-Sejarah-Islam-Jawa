@@ -1,26 +1,196 @@
 {
   "questions": [
     {
-      "id": "1",
-      "text": "Siapakah pendiri Kesultanan Demak yang juga merupakan ayah dari Sunan Prawoto?",
+      "id": "1779930353515",
+      "text": "Salah satu alasan utama budaya Mataram Islam masih bertahan hingga saat ini adalah karena...",
       "options": [
-        "Sultan Trenggana",
-        "Raden Patah",
-        "Adipati Unus",
-        "Arya Penangsang"
+        "Bersifat tertutup terhadap perubahan",
+        "Hanya diwariskan di lingkungan keraton",
+        "Mampu beradaptasi dengan perkembangan zaman",
+        "Tidak terpengaruh budaya lain"
       ],
-      "correctOptionIndex": 0
+      "correctOptionIndex": 2,
+      "category": "Kerajaan Mataram"
     },
     {
-      "id": "2",
-      "text": "Kerajaan Islam manakah yang didirikan oleh Jaka Tingkir setelah runtuhnya Demak?",
+      "id": "1779930434525",
+      "text": "Pendiri Kesultanan Mataram Islam adalah...",
       "options": [
-        "Mataram Islam",
-        "Pajang",
-        "Pengging",
-        "Cirebon"
+        "Sultan Agung Hanyakrakusuma",
+        "Panembahan Senopati",
+        "Sultan Hadiwijaya",
+        "Amangkurat I"
       ],
-      "correctOptionIndex": 1
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779930522907",
+      "text": "Berdirinya Kesultanan Mataram tidak terlepas dari dinamika politik di kerajaan...",
+      "options": [
+        "Demak",
+        "Pajang",
+        "Majapahit",
+        "Banten"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779930580400",
+      "text": "Sultan Agung dikenal sebagai pemimpin besar Mataram Islam karena...",
+      "options": [
+        "Menghapus tradisi Jawa kuno",
+        "Memadukan nilai Islam dengan budaya Jawa",
+        "Menyerahkan wilayah Mataram kepada VOC",
+        "Mengutamakan budaya asing"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779930641491",
+      "text": "Salah satu contoh warisan budaya Mataram Islam yang masih dilestarikan hingga sekarang adalah...",
+      "options": [
+        "Festival Cap Go Meh",
+        "Upacara Sekaten",
+        "Perayaan Nyepi",
+        "Festival Danau Toba"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779930707111",
+      "text": "Jalur filosofis Laut Selatan–Keraton–Gunung Merapi dalam konsep tata ruang Yogyakarta melambangkan...",
+      "options": [
+        "Jalur perdagangan kerajaan",
+        "Hubungan manusia, alam, dan Tuhan",
+        "Sistem pertahanan kerajaan",
+        "Pembagian wilayah administratif"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779930761730",
+      "text": "Malioboro dalam perspektif Mataram Islam dipandang sebagai...",
+      "options": [
+        "Kawasan industri modern",
+        "Jalur spiritual dan simbolis kerajaan",
+        "Pelabuhan perdagangan utama",
+        "Kawasan pertanian kerajaan"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779930811711",
+      "text": "Salah satu strategi budaya penguasa Mataram Islam dalam menyebarkan Islam adalah melalui...",
+      "options": [
+        "Pemaksaan hukum agama",
+        "Akulturasi budaya lokal",
+        "Larangan adat Jawa",
+        "Penghapusan tradisi masyarakat"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779930860574",
+      "text": "Sifat adaptif budaya Mataram Islam menunjukkan bahwa budaya tersebut...",
+      "options": [
+        "Menolak seluruh perubahan sosial",
+        "Mampu menyesuaikan diri tanpa kehilangan identitas",
+        "Hanya bertahan di wilayah Yogyakarta",
+        "Tidak memiliki nilai religius"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779930903741",
+      "text": "Konsep kosmologi Jawa-Islam dalam tata ruang kota Yogyakarta menekankan...",
+      "options": [
+        "Kebebasan individu",
+        "Harmoni antara manusia dan alam semesta",
+        "Perdagangan internasional",
+        "Kekuasaan militer"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779930952316",
+      "text": "Tradisi Grebeg yang masih dilakukan hingga kini merupakan contoh...",
+      "options": [
+        "Modernisasi budaya Barat",
+        "Sinkretisme budaya Jawa dan Islam",
+        "Pengaruh kolonial Belanda",
+        "Tradisi Hindu murni"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779930996678",
+      "text": "Relevansi budaya Mataram Islam di masa kini dapat dilihat dari...",
+      "options": [
+        "Hilangnya nilai spiritual masyarakat",
+        "Tetap digunakannya simbol, tradisi, dan filosofi dalam kehidupan sehari-hari",
+        "Berkurangnya minat terhadap budaya lokal",
+        "Dominasi budaya asing sepenuhnya"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779931042749",
+      "text": "Jika budaya Mataram Islam tidak mampu beradaptasi, kemungkinan besar yang akan terjadi adalah...",
+      "options": [
+        "Semakin kuat pengaruhnya",
+        "Budaya tersebut mudah ditinggalkan masyarakat",
+        "Menjadi budaya global",
+        "Menjadi dasar hukum negara"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779931088952",
+      "text": "Mengapa generasi muda penting memahami warisan budaya Mataram Islam?",
+      "options": [
+        "Agar dapat meninggalkan budaya lama",
+        "Untuk menjaga identitas dan nilai historis bangsa",
+        "Supaya hanya fokus pada sejarah kerajaan",
+        "Karena budaya modern tidak penting"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779931129515",
+      "text": "Filosofi Malioboro dapat dimaknai sebagai perjalanan manusia menuju...",
+      "options": [
+        "Kekayaan duniawi",
+        "Kesempurnaan spiritual",
+        "Kekuasaan politik",
+        "Kemajuan teknologi"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
+    },
+    {
+      "id": "1779931169934",
+      "text": "Pelajaran utama dari keberlangsungan budaya Mataram Islam bagi masyarakat modern adalah...",
+      "options": [
+        "Budaya harus selalu tetap tanpa perubahan",
+        "Tradisi dapat hidup jika mampu beradaptasi dan tetap bermakna",
+        "Semua budaya lama harus ditinggalkan",
+        "Budaya hanya penting bagi akademisi"
+      ],
+      "correctOptionIndex": 1,
+      "category": "Kerajaan Mataram"
     }
   ],
   "results": [
