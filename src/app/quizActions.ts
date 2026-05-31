@@ -29,8 +29,36 @@ export async function deleteQuizQuestion(id: string) {
   return { success: true };
 }
 
-export async function submitQuizResult(playerName: string, score: number, totalQuestions: number) {
-  const result = saveResult({ playerName, score, totalQuestions });
-  revalidatePath('/admin/quiz/results');
-  return result;
+export async function submitQuizResult(playerName: string, score: number, totalQuestions: number, category: string = "Campuran", rating: string = "") {
+  // Save to Google Sheets
+  try {
+    const googleAppScriptURL = "https://script.google.com/macros/s/AKfycbyz1mtpoCPvXexUEMJqC6fJJhqSYpNoNAZ1wBtMQVRcRfwJCV5K0NPSjFN1KwCVTZ804w/exec";
+    
+    await fetch(googleAppScriptURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: playerName,
+        category: category || "Campuran",
+        score: score,
+        totalQuestions: totalQuestions,
+        rating: rating
+      })
+    });
+  } catch (error) {
+    console.error("Failed to save to Google Sheets:", error);
+  }
+
+  // Save locally (will work on localhost, but will fail gracefully on Vercel due to read-only filesystem)
+  let result = null;
+  try {
+    result = saveResult({ playerName, score, totalQuestions });
+    revalidatePath('/admin/quiz/results');
+  } catch (e) {
+    console.log("Local save failed (expected on Vercel):", e);
+  }
+  
+  return result || { success: true };
 }

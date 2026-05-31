@@ -5,6 +5,64 @@ import { Question } from '@/lib/quiz-data';
 import { submitQuizResult } from '@/app/quizActions';
 import Link from 'next/link';
 
+const playCorrectSound = () => {
+  try {
+    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    const now = ctx.currentTime;
+    
+    // Pleasant double chime (C5 -> E5)
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(523.25, now); // C5
+    gain1.gain.setValueAtTime(0.08, now);
+    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+    osc1.connect(gain1);
+    gain1.connect(ctx.destination);
+    osc1.start(now);
+    osc1.stop(now + 0.12);
+
+    const osc2 = ctx.createOscillator();
+    const gain2 = ctx.createGain();
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(659.25, now + 0.08); // E5
+    gain2.gain.setValueAtTime(0.08, now + 0.08);
+    gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+    osc2.connect(gain2);
+    gain2.connect(ctx.destination);
+    osc2.start(now + 0.08);
+    osc2.stop(now + 0.25);
+  } catch (e) {
+    console.error('Failed to play correct sound:', e);
+  }
+};
+
+const playIncorrectSound = () => {
+  try {
+    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+    const now = ctx.currentTime;
+    
+    // Buzz sound (descending triangle wave)
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(150, now);
+    osc.frequency.linearRampToValueAtTime(90, now + 0.25);
+    gain.gain.setValueAtTime(0.12, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.25);
+  } catch (e) {
+    console.error('Failed to play incorrect sound:', e);
+  }
+};
+
 export default function QuizClient({ questions }: { questions: Question[] }) {
   const [gameState, setGameState] = useState<'START' | 'PLAYING' | 'FINISHED'>('START');
   const [playerName, setPlayerName] = useState('');
@@ -33,6 +91,9 @@ export default function QuizClient({ questions }: { questions: Question[] }) {
     const isCorrect = optionIndex === currentQuestion.correctOptionIndex;
     if (isCorrect) {
       setScore(prev => prev + 1);
+      playCorrectSound();
+    } else {
+      playIncorrectSound();
     }
 
     // Wait 2 seconds before next question
@@ -44,7 +105,21 @@ export default function QuizClient({ questions }: { questions: Question[] }) {
         setCurrentQuestionIndex(prev => prev + 1);
       } else {
         // Finish Quiz
-        submitQuizResult(playerName, score + (isCorrect ? 1 : 0), filteredQuestions.length);
+        const finalScore = score + (isCorrect ? 1 : 0);
+        const percentage = Math.round((finalScore / filteredQuestions.length) * 100);
+        let message = "";
+        if (percentage === 100) message = "Luar Biasa! Ahli Sejarah!";
+        else if (percentage >= 75) message = "Hebat! Pengetahuan Anda Sangat Baik.";
+        else if (percentage >= 50) message = "Lumayan! Masih Perlu Sedikit Mengulang Sejarah.";
+        else message = "Jangan Menyerah! Mari Baca Artikel Sejarah Kembali.";
+
+        submitQuizResult(
+          playerName, 
+          finalScore, 
+          filteredQuestions.length,
+          selectedCategory || "Semua Kategori",
+          message
+        );
         setGameState('FINISHED');
       }
     }, 2000);
@@ -157,16 +232,32 @@ export default function QuizClient({ questions }: { questions: Question[] }) {
         
         {/* Feedback Overlay */}
         {showFeedback && (
-          <div className="fixed top-10 left-1/2 -translate-x-1/2 z-50 animate-bounce">
-            {isCorrect ? (
-              <div className="bg-green-500 text-white px-8 py-3 rounded-full font-black text-xl uppercase tracking-widest shadow-2xl">
-                Tepat Sekali! +1
+          <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50 backdrop-blur-sm animate-quiz-fade-in">
+            <div className={`p-8 rounded-2xl border-2 text-center shadow-2xl max-w-xs w-full mx-4 quiz-feedback-modal animate-quiz-scale-up ${
+              isCorrect ? 'border-green-500 shadow-green-500/20' : 'border-red-500 shadow-red-500/20'
+            }`}>
+              <div className={`w-20 h-20 mx-auto mb-4 rounded-full border-4 flex items-center justify-center ${
+                isCorrect ? 'quiz-feedback-correct-bg' : 'quiz-feedback-incorrect-bg'
+              }`}>
+                {isCorrect ? (
+                  <svg className="w-10 h-10 quiz-feedback-correct-text" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                ) : (
+                  <svg className="w-10 h-10 quiz-feedback-incorrect-text" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                )}
               </div>
-            ) : (
-              <div className="bg-red-500 text-white px-8 py-3 rounded-full font-black text-xl uppercase tracking-widest shadow-2xl">
-                Salah!
-              </div>
-            )}
+              <h3 className={`text-2xl font-black font-serif uppercase tracking-wider mb-1 ${
+                isCorrect ? 'quiz-feedback-correct-text' : 'quiz-feedback-incorrect-text'
+              }`}>
+                {isCorrect ? 'Tepat Sekali!' : 'Kurang Tepat!'}
+              </h3>
+              <p className="text-gray-400 text-sm font-serif">
+                {isCorrect ? '+1 Poin' : 'Tetap Semangat!'}
+              </p>
+            </div>
           </div>
         )}
       </div>
