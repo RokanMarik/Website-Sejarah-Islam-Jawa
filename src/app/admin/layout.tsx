@@ -1,8 +1,10 @@
 import Link from "next/link";
+import AuthGuard from "@/components/admin/AuthGuard";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900">
+    <AuthGuard>
+      <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900">
       <header className="bg-blue-900 text-white py-4 px-6 shadow-md flex justify-between items-center z-10 relative">
         <div className="flex items-center gap-8">
           <h1 className="text-2xl font-bold">NusaHistoria CMS</h1>
@@ -30,5 +32,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {children}
       </main>
     </div>
+    </AuthGuard>
   );
 }
