@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'NusaHistoria | Sejarah Islam Jawa',
     description: 'Mempelajari sejarah transisi kekuasaan dari Pengging, Pajang, hingga Kesultanan Mataram Islam.',
-    url: 'https://nusahistoria.vercel.app',
+    url: 'https://website-sejarah-islam-jawa.vercel.app',
     siteName: 'NusaHistoria',
     images: [{ url: '/og-image.svg', width: 1200, height: 630, alt: 'NusaHistoria - Sejarah Islam Jawa' }],
     locale: 'id_ID',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     creator: '@rokanakbar14',
   },
   alternates: {
-    canonical: 'https://nusahistoria.vercel.app',
+    canonical: 'https://website-sejarah-islam-jawa.vercel.app',
   },
 };
 

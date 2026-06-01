@@ -12,6 +12,6 @@ export default function robots() {
         disallow: ['/admin', '/api/'],
       },
     ],
-    sitemap: 'https://nusahistoria.vercel.app/sitemap.xml',
+    sitemap: 'https://website-sejarah-islam-jawa.vercel.app/sitemap.xml',
   };
 }

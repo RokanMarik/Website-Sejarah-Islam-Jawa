@@ -26,10 +26,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: article.title,
       description: article.excerpt,
-      url: `https://nusahistoria.vercel.app/article/${article.slug}`,
+      url: `https://website-sejarah-islam-jawa.vercel.app/article/${article.slug}`,
       siteName: 'NusaHistoria',
       images: [{ 
-        url: article.coverImage || 'https://nusahistoria.vercel.app/og-image.svg', 
+        url: article.coverImage || 'https://website-sejarah-islam-jawa.vercel.app/og-image.svg', 
         width: 1200, 
         height: 630,
         alt: article.title,
@@ -42,10 +42,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       card: 'summary_large_image',
       title: article.title,
       description: article.excerpt,
-      images: [article.coverImage || 'https://nusahistoria.vercel.app/og-image.svg'],
+      images: [article.coverImage || 'https://website-sejarah-islam-jawa.vercel.app/og-image.svg'],
     },
     alternates: {
-      canonical: `https://nusahistoria.vercel.app/article/${article.slug}`,
+      canonical: `https://website-sejarah-islam-jawa.vercel.app/article/${article.slug}`,
     },
   };
 }
@@ -71,12 +71,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             '@type': 'Article',
             headline: article.title,
             description: article.excerpt,
-            image: article.coverImage || 'https://nusahistoria.vercel.app/og-image.svg',
+            image: article.coverImage || 'https://website-sejarah-islam-jawa.vercel.app/og-image.svg',
             datePublished: article.date,
             dateModified: article.date,
             author: { '@type': 'Person', name: article.author, url: article.authorInstagram || undefined },
-            publisher: { '@type': 'Organization', name: 'NusaHistoria', logo: { '@type': 'ImageObject', url: 'https://nusahistoria.vercel.app/og-image.svg' } },
-            mainEntityOfPage: { '@type': 'WebPage', '@id': `https://nusahistoria.vercel.app/article/${article.slug}` },
+            publisher: { '@type': 'Organization', name: 'NusaHistoria', logo: { '@type': 'ImageObject', url: 'https://website-sejarah-islam-jawa.vercel.app/og-image.svg' } },
+            mainEntityOfPage: { '@type': 'WebPage', '@id': `https://website-sejarah-islam-jawa.vercel.app/article/${article.slug}` },
           }),
         }}
       />

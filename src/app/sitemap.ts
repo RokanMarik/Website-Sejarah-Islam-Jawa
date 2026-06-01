@@ -20,7 +20,7 @@ function parseIndonesianDate(dateStr: string): Date {
 
 export default async function sitemap() {
   const articles = getArticles();
-  const baseUrl = 'https://nusahistoria.vercel.app';
+  const baseUrl = 'https://website-sejarah-islam-jawa.vercel.app';
 
   // Static pages
   const staticPages = [
