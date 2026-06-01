@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import AudioPlayer from "@/components/AudioPlayer";
 import NewsletterForm from "@/components/NewsletterForm";
 import BackToTop from "@/components/BackToTop";
+import Analytics from "@/components/Analytics";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -25,6 +26,11 @@ export const metadata: Metadata = {
   description: "Ensiklopedia digital sejarah Islam Jawa — menelusuri transisi kekuasaan dari Pengging, Pajang, hingga Kesultanan Mataram Islam.",
   keywords: ["sejarah islam jawa", "kerajaan mataram", "kerajaan pajang", "kerajaan pengging", "sejarah nusantara"],
   authors: [{ name: "NusaHistoria" }],
+  alternates: {
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
+  },
   openGraph: {
     type: "website",
     locale: "id_ID",
@@ -66,6 +72,7 @@ export default function RootLayout({
         <main>{children}</main>
         <AudioPlayer />
         <BackToTop />
+        <Analytics />
         
         <footer className="bg-black text-gray-500 py-12 border-t border-gray-800 mt-20 transition-colors duration-1000">
           <div className="max-w-7xl mx-auto px-4 lg:px-8 flex flex-col items-center justify-center gap-6">

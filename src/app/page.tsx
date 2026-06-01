@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import Ornament from "@/components/Ornament";
 import JavaMap from "@/components/JavaMap";
 import Timeline from "@/components/Timeline";
+import PopularArticles from "@/components/PopularArticles";
 
 export default async function Home() {
   const articles = getArticles();
@@ -58,6 +59,9 @@ export default async function Home() {
 
         </div>
       </div>
+
+      {/* Popular Articles */}
+      <PopularArticles articles={articles} />
     </div>
   );
 }
