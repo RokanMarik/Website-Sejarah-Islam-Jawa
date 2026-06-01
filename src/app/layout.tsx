@@ -4,6 +4,7 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import AudioPlayer from "@/components/AudioPlayer";
 import NewsletterForm from "@/components/NewsletterForm";
+import BackToTop from "@/components/BackToTop";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -64,6 +65,7 @@ export default function RootLayout({
         <Navigation />
         <main>{children}</main>
         <AudioPlayer />
+        <BackToTop />
         
         <footer className="bg-black text-gray-500 py-12 border-t border-gray-800 mt-20 transition-colors duration-1000">
           <div className="max-w-7xl mx-auto px-4 lg:px-8 flex flex-col items-center justify-center gap-6">
