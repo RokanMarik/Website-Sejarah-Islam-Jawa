@@ -16,8 +16,36 @@ const merriweather = Merriweather({
 });
 
 export const metadata: Metadata = {
-  title: "NusaHistoria | Sejarah Islam Jawa",
-  description: "Mempelajari sejarah transisi kekuasaan dari Pengging, Pajang, hingga Kesultanan Mataram Islam.",
+  title: { 
+    template: '%s | NusaHistoria', 
+    default: 'NusaHistoria | Sejarah Islam Jawa' 
+  },
+  description: 'Mempelajari sejarah transisi kekuasaan dari Pengging, Pajang, hingga Kesultanan Mataram Islam.',
+  keywords: ['sejarah islam', 'jawa', 'kerajaan', 'pengging', 'pajang', 'mataram', 'islam jawa', 'sejarah jawa'],
+  authors: [{ name: 'Rokan Akbar Marik', url: 'https://instagram.com/rokanakbar14' }],
+  creator: 'Rokan Akbar Marik',
+  publisher: 'NusaHistoria',
+  formatDetection: { email: false, telephone: false },
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: 'NusaHistoria | Sejarah Islam Jawa',
+    description: 'Mempelajari sejarah transisi kekuasaan dari Pengging, Pajang, hingga Kesultanan Mataram Islam.',
+    url: 'https://nusahistoria.vercel.app',
+    siteName: 'NusaHistoria',
+    images: [{ url: '/og-image.svg', width: 1200, height: 630, alt: 'NusaHistoria - Sejarah Islam Jawa' }],
+    locale: 'id_ID',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'NusaHistoria | Sejarah Islam Jawa',
+    description: 'Mempelajari sejarah transisi kekuasaan dari Pengging, Pajang, hingga Kesultanan Mataram Islam.',
+    images: ['/og-image.svg'],
+    creator: '@rokanakbar14',
+  },
+  alternates: {
+    canonical: 'https://nusahistoria.vercel.app',
+  },
 };
 
 export default function RootLayout({
