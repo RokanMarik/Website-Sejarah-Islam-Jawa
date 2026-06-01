@@ -10,7 +10,7 @@ export default async function CategoryPage({
 }) {
   const { kerajaan, subkategori } = await params;
   
-  const allArticles = getArticles();
+  const allArticles = await getArticles();
   
   // Filter by matching the category to the kerajaan name (e.g. "Kerajaan Pajang" includes "pajang")
   // and matching the subcategory exactly (e.g. "perkembangan")

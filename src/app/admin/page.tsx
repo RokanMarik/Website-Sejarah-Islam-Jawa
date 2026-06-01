@@ -2,8 +2,8 @@ import { getArticles } from "@/lib/data";
 import AdminClient from "./AdminClient";
 import Link from "next/link";
 
-export default function AdminPage() {
-  const articles = getArticles();
+export default async function AdminPage() {
+  const articles = await getArticles();
 
   return (
     <div className="pb-20 text-gray-900">

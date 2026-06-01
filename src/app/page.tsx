@@ -8,7 +8,7 @@ import Timeline from "@/components/Timeline";
 import PopularArticles from "@/components/PopularArticles";
 
 export default async function Home() {
-  const articles = getArticles();
+  const articles = await getArticles();
   const headlineArticle = articles.find(a => a.isHeadline) || articles[0];
   const gridArticles = articles.filter(a => a.id !== headlineArticle.id);
 

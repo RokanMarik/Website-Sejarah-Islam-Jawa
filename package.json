@@ -10,7 +10,7 @@
     "migrate": "npx tsx scripts/migrate.ts"
   },
   "dependencies": {
-    "better-sqlite3": "^12.10.0",
+    "@libsql/client": "^0.17.3",
     "jodit-react": "^5.3.21",
     "next": "16.2.6",
     "react": "19.2.4",

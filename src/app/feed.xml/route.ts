@@ -12,7 +12,7 @@ function escapeXml(text: string): string {
 }
 
 export async function GET() {
-  const articles = getArticles();
+  const articles = await getArticles();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com";
 
   const items = articles.map(article => `

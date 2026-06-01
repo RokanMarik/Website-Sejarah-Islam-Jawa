@@ -1,4 +1,7 @@
-import { getArticles as getDbArticles, saveArticles as saveDbArticles } from "./db";
+import { getArticles as getDbArticles, saveArticles as saveDbArticles, initDb } from "./db";
+
+// Initialize DB on module load
+initDb().catch(console.error);
 
 export interface Article {
   id: string;
@@ -17,10 +20,10 @@ export interface Article {
   tags?: string[];
 }
 
-export function getArticles(): Article[] {
-  return getDbArticles() as Article[];
+export async function getArticles(): Promise<Article[]> {
+  return (await getDbArticles()) as unknown as Article[];
 }
 
-export function saveArticles(articles: Article[]) {
-  saveDbArticles(articles);
+export async function saveArticles(articles: Article[]) {
+  await saveDbArticles(articles);
 }

@@ -17,8 +17,8 @@ function parseIndonesianDate(dateStr: string): Date {
   return new Date();
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const articles = getArticles();
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const articles = await getArticles();
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com";
 
   const articleUrls = articles.map((article) => ({

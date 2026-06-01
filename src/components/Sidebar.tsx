@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { getArticles } from "@/lib/data";
 
-export default function Sidebar() {
-  const articles = getArticles();
+export default async function Sidebar() {
+  const articles = await getArticles();
   const popularArticles = articles.slice(1, 3);
 
   return (

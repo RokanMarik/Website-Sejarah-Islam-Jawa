@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ results: [], query });
   }
 
-  const articles = getArticles();
+  const articles = await getArticles();
   const q = query.toLowerCase();
 
   const results = articles

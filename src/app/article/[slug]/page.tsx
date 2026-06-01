@@ -13,7 +13,7 @@ import ReadingProgress from "@/components/ReadingProgress";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const articles = getArticles();
+  const articles = await getArticles();
   const article = articles.find((a) => a.slug === slug);
 
   if (!article) {
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const articles = getArticles();
+  const articles = await getArticles();
   const article = articles.find((a) => a.slug === slug);
 
   if (!article) {
@@ -225,8 +225,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 }
 
 // Generate static paths
-export function generateStaticParams() {
-  const articles = getArticles();
+export async function generateStaticParams() {
+  const articles = await getArticles();
   return articles.map((article) => ({
     slug: article.slug,
   }));
