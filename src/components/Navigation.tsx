@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
-import SearchBar from "./SearchBar";
 import MobileMenu from "./MobileMenu";
 import SearchModal from "./SearchModal";
 
@@ -44,8 +43,6 @@ export default function Navigation() {
           </Link>
           
           <nav className="hidden md:flex items-center gap-8 text-sm font-bold text-gray-300 uppercase tracking-widest h-full relative" aria-label="Navigasi utama">
-            <Link href="/" className="hover:text-yellow-400 transition-colors h-full flex items-center">Beranda</Link>
-            
             {/* Hierarchical Dropdown Menu */}
             <div 
               className="h-full flex items-center relative group"
@@ -59,7 +56,7 @@ export default function Navigation() {
               
               {/* Mega Menu Dropdown */}
               {activeDropdown === "kerajaan" && (
-                <div className="absolute top-20 left-0 w-[600px] bg-black border-2 border-yellow-400 p-6 grid grid-cols-3 gap-6 shadow-2xl z-50 mega-menu">
+                <div className="absolute top-20 left-0 w-[420px] bg-black border-2 border-yellow-400 p-6 grid grid-cols-3 gap-6 shadow-2xl z-50 mega-menu">
                   {menus.map((menu) => (
                     <div key={menu.title}>
                       <h4 className="text-yellow-400 font-bold mb-4 pb-2 border-b border-gray-800 text-lg font-serif">{menu.title}</h4>
@@ -82,7 +79,6 @@ export default function Navigation() {
             <Link href="/kamus" className="hover:text-yellow-400 transition-colors h-full flex items-center">Kamus</Link>
             <Link href="/kuis" className="hover:text-yellow-400 transition-colors h-full flex items-center">Kuis</Link>
             
-            <SearchBar />
             <SearchTrigger />
             <Link href="/bookmarks" className="hover:text-yellow-400 transition-colors h-full flex items-center" aria-label="Bookmark">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
