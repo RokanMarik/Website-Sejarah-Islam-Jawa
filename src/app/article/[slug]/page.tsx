@@ -11,6 +11,7 @@ import ShareButtons from "@/components/ShareButtons";
 import BookmarkButton from "@/components/BookmarkButton";
 import ReadingProgress from "@/components/ReadingProgress";
 import ReadingTracker from "@/components/ReadingTracker";
+import { ArticleJsonLd, BreadcrumbListJsonLd } from "@/components/JsonLd";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -99,20 +100,18 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </header>
 
       {/* JSON-LD Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Article",
-            headline: article.title,
-            description: article.excerpt,
-            author: { "@type": "Person", name: article.author },
-            datePublished: article.date,
-            publisher: { "@type": "Organization", name: "NusaHistoria" },
-            mainEntityOfPage: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com"}/article/${article.slug}`,
-          }),
-        }}
+      <BreadcrumbListJsonLd items={[
+        { name: "Beranda", url: process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com" },
+        { name: article.category, url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com"}/kategori/${article.category.toLowerCase()}` },
+        { name: article.title, url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com"}/article/${article.slug}` },
+      ]} />
+      <ArticleJsonLd
+        title={article.title}
+        description={article.excerpt}
+        image={article.coverImage}
+        datePublished={article.date}
+        author={article.author}
+        url={`${process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com"}/article/${article.slug}`}
       />
 
       {/* Main 3-Column Layout: Sticky Left, Content Center, Sidebar Right */}
@@ -195,28 +194,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               <BookmarkButton article={article} />
               <ShareButtons title={article.title} slug={article.slug} />
             </div>
-            
-            {/* JSON-LD Structured Data */}
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "Article",
-                  headline: article.title,
-                  description: article.excerpt,
-                  author: { "@type": "Person", name: article.author },
-                  datePublished: article.date,
-                  publisher: {
-                    "@type": "Organization",
-                    name: "NusaHistoria",
-                    logo: { "@type": "ImageObject", url: "https://nusahistoria.com/logo.png" },
-                  },
-                  image: article.coverImage,
-                  keywords: article.tags?.join(", ") || article.category,
-                }),
-              }}
-            />
           </div>
 
           {/* Column 3: Sidebar Right */}
