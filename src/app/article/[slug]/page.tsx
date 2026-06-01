@@ -6,6 +6,7 @@ import Sidebar from "@/components/Sidebar";
 import Ornament from "@/components/Ornament";
 import Glossary from "@/components/Glossary";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import RelatedArticles from "@/components/RelatedArticles";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -159,6 +160,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 ))}
               </div>
             </div>
+            
+            {/* Related Articles */}
+            <RelatedArticles currentArticle={article} allArticles={articles} />
           </div>
 
           {/* Column 3: Sidebar Right */}
