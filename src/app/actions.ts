@@ -1,6 +1,7 @@
 'use server';
 
 import { getArticles, saveArticles, Article } from '@/lib/data';
+import { invalidateCache } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import fs from 'fs';
 import path from 'path';
@@ -33,6 +34,8 @@ export async function saveArticle(data: Article) {
 
   await saveArticles(articles);
   
+  invalidateCache();
+  
   revalidatePath('/');
   revalidatePath(`/article/${data.slug}`);
   revalidatePath('/admin');
@@ -45,6 +48,8 @@ export async function deleteArticle(id: string) {
   let articles = await getArticles();
   articles = articles.filter(a => a.id !== id);
   await saveArticles(articles);
+  
+  invalidateCache();
   
   revalidatePath('/');
   revalidatePath('/admin');
