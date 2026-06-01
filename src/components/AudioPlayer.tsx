@@ -37,7 +37,7 @@ export default function AudioPlayer() {
   return (
     <button 
       onClick={togglePlay}
-      className={`fixed bottom-6 right-6 z-[9999] flex items-center gap-3 rounded-full py-3 px-4 shadow-2xl transition-all duration-500 border-2 audio-player-btn cursor-pointer ${isPlaying ? 'bg-yellow-500 border-yellow-400 text-black animate-pulse shadow-[0_0_20px_rgba(234,179,8,0.5)]' : 'bg-black border-gray-800 text-yellow-500 hover:border-yellow-500'}`}
+      className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-full py-3 px-4 shadow-2xl transition-all duration-500 border-2 audio-player-btn cursor-pointer ${isPlaying ? 'bg-yellow-500 border-yellow-400 text-black animate-pulse shadow-[0_0_20px_rgba(234,179,8,0.5)]' : 'bg-black border-gray-800 text-yellow-500 hover:border-yellow-500'}`}
       title="Putar Musik Latar"
     >
       {isPlaying ? (

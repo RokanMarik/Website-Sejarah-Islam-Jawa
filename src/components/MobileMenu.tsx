@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
 export default function MobileMenu({
   isOpen,
@@ -63,6 +64,9 @@ export default function MobileMenu({
           <Link href="/kamus" onClick={onClose} className="block py-2 text-white hover:text-yellow-400 font-bold uppercase">Kamus</Link>
           <Link href="/kuis" onClick={onClose} className="block py-2 text-white hover:text-yellow-400 font-bold uppercase">Kuis</Link>
           <Link href="/bookmarks" onClick={onClose} className="block py-2 text-white hover:text-yellow-400 font-bold uppercase">Bookmark</Link>
+          <div className="flex items-center gap-3 py-2">
+            <ThemeToggle />
+          </div>
         </nav>
       </div>
     </div>

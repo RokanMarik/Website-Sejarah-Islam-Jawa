@@ -2,17 +2,19 @@
 import { useState } from 'react';
 
 const eventToArticleSlug: Record<string, string> = {
-  "Berdirinya Kesultanan Demak": "kerajaan-pajang",
-  "Kedaulatan Demak": "kerajaan-pajang",
-  "Hadiah Alas Mentaok": "bangkitnya-mataram-islam-panembahan-senopati",
+  "Berdirinya Kesultanan Demak": "bangkitnya-mataram-islam-panembahan-senopati",
+  "Kedaulatan Demak": "bangkitnya-mataram-islam-panembahan-senopati",
+  "Hadiah Alas Mentaok": "berawal-dari-sebuah-hadiah-babat-alas-mentaok",
   "Kedaulatan Mataram": "bangkitnya-mataram-islam-panembahan-senopati",
   "Sultan Agung Bertahta": "bangkitnya-mataram-islam-panembahan-senopati",
   "Gelar Sultan": "bangkitnya-mataram-islam-panembahan-senopati",
-  "Perjanjian Giyanti": "kerajaan-mataram",
-  "Sultan Trenggono Wafat": "kerajaan-pajang",
-  "Masa Transisi ke Pajang": "kerajaan-pajang",
+  "Perjanjian Giyanti": "bangkitnya-mataram-islam-panembahan-senopati",
+  "Sultan Trenggono Wafat": "bangkitnya-mataram-islam-panembahan-senopati",
+  "Masa Transisi ke Pajang": "bangkitnya-mataram-islam-panembahan-senopati",
   "Ekspansi Senopati": "bangkitnya-mataram-islam-panembahan-senopati",
   "Serbuan ke Batavia": "bangkitnya-mataram-islam-panembahan-senopati",
+  "Penaklukan Pengging": "di-balik-cap-sesat-terhadap-pengging",
+  "Eksekusi Kebo Kenanga": "di-balik-cap-sesat-terhadap-pengging",
 };
 
 export default function Timeline() {
