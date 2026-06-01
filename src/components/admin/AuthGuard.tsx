@@ -11,18 +11,24 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     let cancelled = false;
     const checkAuth = async () => {
       try {
+        console.log('[AuthGuard] Checking auth...');
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 5000);
         
         const res = await fetch("/api/auth/verify", { signal: controller.signal });
         clearTimeout(timeout);
         
+        console.log('[AuthGuard] Verify response:', res.status);
+        
         if (!res.ok) {
+          console.log('[AuthGuard] Not authenticated, redirecting to login');
           if (!cancelled) router.push("/admin/login");
         } else {
+          console.log('[AuthGuard] Authenticated!');
           if (!cancelled) setIsAuthenticated(true);
         }
-      } catch {
+      } catch (err) {
+        console.error('[AuthGuard] Auth check failed:', err);
         if (!cancelled) router.push("/admin/login");
       }
     };
