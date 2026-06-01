@@ -1,7 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getArticles } from "@/lib/data";
+import { checkRateLimit, getRateLimitHeaders } from '@/lib/rate-limiter';
 
 export async function GET(request: NextRequest) {
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown';
+  const rateLimit = checkRateLimit(ip, 'medium');
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: 'Too many searches. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': String(rateLimit.retryAfter || 60), ...getRateLimitHeaders(rateLimit) } }
+    );
+  }
+
   const query = request.nextUrl.searchParams.get("q") || "";
   
   if (query.length < 2) {

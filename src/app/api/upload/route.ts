@@ -1,8 +1,18 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { checkRateLimit, getRateLimitHeaders } from '@/lib/rate-limiter';
 
 export async function POST(req: Request) {
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown';
+  const rateLimit = checkRateLimit(ip, 'strict');
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { success: false, message: 'Too many uploads. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': String(rateLimit.retryAfter || 60), ...getRateLimitHeaders(rateLimit) } }
+    );
+  }
+
   try {
     const formData = await req.formData();
     

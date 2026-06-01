@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { checkRateLimit, cleanupRateLimitStore } from "@/lib/rate-limiter";
+import { checkRateLimit, cleanupRateLimitStore, getRateLimitHeaders } from "@/lib/rate-limiter";
 import { generateCsrfToken } from "@/lib/csrf";
 
 export async function POST(request: NextRequest) {
@@ -10,13 +10,16 @@ export async function POST(request: NextRequest) {
              request.headers.get("x-real-ip") || 
              "unknown";
 
-  const rateLimit = checkRateLimit(ip);
+  const rateLimit = checkRateLimit(ip, 'strict');
   if (!rateLimit.allowed) {
     return NextResponse.json(
       { success: false, error: "Too many attempts. Please try again later." },
       { 
         status: 429,
-        headers: { "Retry-After": String(rateLimit.retryAfter || 900) }
+        headers: { 
+          "Retry-After": String(rateLimit.retryAfter || 60),
+          ...getRateLimitHeaders(rateLimit),
+        }
       }
     );
   }
