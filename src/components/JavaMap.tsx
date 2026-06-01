@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 const javaCoastline = "M120,150 C150,140 180,150 220,155 C250,160 280,140 290,120 C300,100 330,110 350,130 C380,150 430,140 460,150 C490,160 520,170 510,190 C500,210 460,210 420,200 C380,190 350,220 310,210 C270,200 240,180 200,190 C160,200 130,190 120,170 Z";
 const maduraCoastline = "M455,135 C475,125 505,125 515,135 C495,145 465,145 455,135 Z";
@@ -76,7 +77,42 @@ const eras = [
 
 export default function JavaMap() {
   const [activeEraIndex, setActiveEraIndex] = useState(0);
+  const [hoveredRegion, setHoveredRegion] = useState<{ name: string; x: number; y: number } | null>(null);
+  const [scale, setScale] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const currentEra = eras[activeEraIndex];
+
+  const regionToCategory: Record<string, string> = {
+    "Kesultanan Demak": "Kerajaan Mataram",
+    "Pengging": "Kerajaan Pengging",
+    "Kesultanan Pajang": "Kerajaan Pajang",
+    "Pajang": "Kerajaan Pajang",
+    "Mataram Islam": "Kerajaan Mataram",
+    "Banten": "Kerajaan Mataram",
+    "Cirebon": "Kerajaan Mataram",
+    "Pajajaran": "Kerajaan Mataram",
+    "Pakuan": "Kerajaan Mataram",
+    "Surakarta": "Kerajaan Mataram",
+    "Yogyakarta": "Kerajaan Mataram",
+    "Hindia Belanda": "Kerajaan Mataram",
+    "Batavia (VOC)": "Kerajaan Mataram",
+  };
+
+  const handleRegionClick = (regionName: string) => {
+    const category = regionToCategory[regionName];
+    if (category) {
+      // Use a generic slug based on category — the article page will find the first match
+      const slugMap: Record<string, string> = {
+        "Kerajaan Pengging": "kerajaan-pengging",
+        "Kerajaan Pajang": "kerajaan-pajang",
+        "Kerajaan Mataram": "bangkitnya-mataram-islam-panembahan-senopati",
+      };
+      const slug = slugMap[category] || "kerajaan-pajang";
+      window.location.href = `/article/${slug}`;
+    }
+  };
 
   return (
     <div className="w-full bg-neutral-900 border border-yellow-900/30 rounded-xl p-4 md:p-8 relative overflow-hidden transition-colors duration-500 font-sans shadow-2xl">
@@ -108,7 +144,15 @@ export default function JavaMap() {
 
         <div className="relative w-full max-w-5xl mx-auto aspect-[2/1] bg-[#7dd3fc] rounded-md border-4 border-[#8b5a2b] flex items-center justify-center overflow-hidden shadow-inner">
           
-          <svg viewBox="0 0 600 300" className="w-full h-full">
+          <svg 
+            viewBox="0 0 600 300" 
+            className="w-full h-full transition-transform duration-200" 
+            style={{ transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`, cursor: isDragging ? 'grabbing' : 'grab' }}
+            onMouseDown={(e) => { setIsDragging(true); setDragStart({ x: e.clientX - position.x * scale, y: e.clientY - position.y * scale }); }}
+            onMouseMove={(e) => { if (isDragging) setPosition({ x: (e.clientX - dragStart.x) / scale, y: (e.clientY - dragStart.y) / scale }); }}
+            onMouseUp={() => setIsDragging(false)}
+            onMouseLeave={() => { setIsDragging(false); setHoveredRegion(null); }}
+          >
             <defs>
               <filter id="paperTexture">
                 <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="4" result="noise" />
@@ -160,7 +204,13 @@ export default function JavaMap() {
                     stroke="#000000"
                     strokeWidth="1.5"
                     strokeLinejoin="round"
-                    className="transition-all duration-700 ease-in-out opacity-90 hover:opacity-100"
+                    className="transition-all duration-700 ease-in-out opacity-90 hover:opacity-100 cursor-pointer"
+                    onMouseEnter={(e) => {
+                      const rect = (e.target as SVGElement).getBoundingClientRect();
+                      setHoveredRegion({ name: region.name, x: rect.left + rect.width / 2, y: rect.top - 10 });
+                    }}
+                    onMouseLeave={() => setHoveredRegion(null)}
+                    onClick={() => handleRegionClick(region.name)}
                   />
                 ) : (
                   <rect
@@ -169,6 +219,13 @@ export default function JavaMap() {
                     fill={region.fill}
                     stroke="#000000"
                     strokeWidth="1.5"
+                    className="cursor-pointer"
+                    onMouseEnter={(e) => {
+                      const rect = (e.target as SVGElement).getBoundingClientRect();
+                      setHoveredRegion({ name: region.name, x: rect.left + rect.width / 2, y: rect.top - 10 });
+                    }}
+                    onMouseLeave={() => setHoveredRegion(null)}
+                    onClick={() => handleRegionClick(region.name)}
                   />
                 )
               ))}
@@ -227,6 +284,39 @@ export default function JavaMap() {
               </g>
             ))}
           </svg>
+
+          {/* Tooltip */}
+          {hoveredRegion && (
+            <div
+              className="fixed z-50 bg-black/90 border border-yellow-500 text-white px-4 py-2 rounded shadow-xl pointer-events-none text-sm"
+              style={{ left: hoveredRegion.x, top: hoveredRegion.y, transform: "translate(-50%, -100%)" }}
+            >
+              <div className="font-bold text-yellow-400 font-serif">{hoveredRegion.name}</div>
+              <div className="text-xs text-gray-400">Klik untuk membaca</div>
+            </div>
+          )}
+
+          {/* Zoom Controls */}
+          <div className="absolute bottom-4 right-4 flex flex-col gap-2">
+            <button
+              onClick={() => setScale(s => Math.min(s + 0.25, 3))}
+              className="w-8 h-8 bg-black/80 border border-yellow-400 text-yellow-400 rounded flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-colors text-lg font-bold"
+            >
+              +
+            </button>
+            <button
+              onClick={() => setScale(s => Math.max(s - 0.25, 0.5))}
+              className="w-8 h-8 bg-black/80 border border-yellow-400 text-yellow-400 rounded flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-colors text-lg font-bold"
+            >
+              &minus;
+            </button>
+            <button
+              onClick={() => { setScale(1); setPosition({ x: 0, y: 0 }); }}
+              className="w-8 h-8 bg-black/80 border border-yellow-400 text-yellow-400 rounded flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-colors text-xs"
+            >
+              &crarr;
+            </button>
+          </div>
         </div>
         
         {/* Legend */}

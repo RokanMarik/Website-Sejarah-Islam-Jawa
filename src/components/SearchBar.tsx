@@ -2,7 +2,24 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { getArticles, Article } from "@/lib/data";
+import articlesData from "@/lib/data.json";
+
+interface Article {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  coverImage: string;
+  category: string;
+  author: string;
+  readTime: string;
+  date: string;
+  isHeadline?: boolean;
+  authorInstagram?: string;
+  subcategory?: string;
+  tags?: string[];
+}
 
 interface SearchResult extends Article {
   matchType: "title" | "excerpt" | "category" | "tags";
@@ -16,7 +33,7 @@ export default function SearchBar() {
   const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setAllArticles(getArticles());
+    setAllArticles(articlesData as Article[]);
   }, []);
 
   useEffect(() => {
