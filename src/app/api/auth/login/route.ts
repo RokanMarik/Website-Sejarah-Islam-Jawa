@@ -5,8 +5,15 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   const { username, password } = body;
 
-  const validUser = process.env.ADMIN_USERNAME || "admin";
-  const validPass = process.env.ADMIN_PASSWORD || "nusahistoria2024";
+  const validUser = process.env.ADMIN_USERNAME;
+  const validPass = process.env.ADMIN_PASSWORD;
+
+  if (!validUser || !validPass) {
+    return NextResponse.json(
+      { success: false, error: "Server configuration error" },
+      { status: 500 }
+    );
+  }
 
   if (username === validUser && password === validPass) {
     const cookieStore = await cookies();
