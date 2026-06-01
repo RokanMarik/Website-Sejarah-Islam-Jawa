@@ -18,6 +18,8 @@ export interface Article {
   authorInstagram?: string;
   subcategory?: string;
   tags?: string[];
+  type?: 'regular' | 'scientific';
+  references?: string[];
 }
 
 export async function getArticles(): Promise<Article[]> {

@@ -28,7 +28,9 @@ export async function initDb() {
       isHeadline INTEGER DEFAULT 0,
       authorInstagram TEXT,
       subcategory TEXT,
-      tags TEXT
+      tags TEXT,
+      type TEXT DEFAULT 'regular',
+      references TEXT
     )
   `);
 
@@ -60,6 +62,8 @@ export async function getArticles() {
     ...row,
     isHeadline: (row as any).isHeadline === 1,
     tags: (row as any).tags ? JSON.parse((row as any).tags as string) : [],
+    type: (row as any).type || 'regular',
+    references: (row as any).references ? JSON.parse((row as any).references as string) : [],
   }));
 }
 
@@ -68,8 +72,8 @@ export async function saveArticles(articles: any[]) {
   
   const statements = articles.map(article => ({
     sql: `INSERT OR REPLACE INTO articles 
-      (id, slug, title, excerpt, content, coverImage, category, author, readTime, date, isHeadline, authorInstagram, subcategory, tags)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      (id, slug, title, excerpt, content, coverImage, category, author, readTime, date, isHeadline, authorInstagram, subcategory, tags, type, references)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     args: [
       article.id,
       article.slug,
@@ -85,6 +89,8 @@ export async function saveArticles(articles: any[]) {
       article.authorInstagram || '',
       article.subcategory || '',
       JSON.stringify(article.tags || []),
+      article.type || 'regular',
+      JSON.stringify(article.references || []),
     ],
   }));
 
@@ -103,5 +109,7 @@ export async function getArticleBySlug(slug: string) {
     ...row,
     isHeadline: (row as any).isHeadline === 1,
     tags: (row as any).tags ? JSON.parse((row as any).tags as string) : [],
+    type: (row as any).type || 'regular',
+    references: (row as any).references ? JSON.parse((row as any).references as string) : [],
   };
 }
