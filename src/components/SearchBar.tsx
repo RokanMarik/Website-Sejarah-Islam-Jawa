@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import articlesData from "@/lib/data.json";
+import { useRouter } from "next/navigation";
 
 interface Article {
   id: string;
@@ -31,6 +32,7 @@ export default function SearchBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [allArticles, setAllArticles] = useState<Article[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     setAllArticles(articlesData as Article[]);
@@ -99,7 +101,7 @@ export default function SearchBar() {
       {isOpen && results.length > 0 && (
         <div className="absolute top-full mt-2 w-80 bg-black border-2 border-yellow-400 rounded-lg shadow-2xl z-50 max-h-96 overflow-y-auto">
           <div className="p-2">
-            {results.map((result) => (
+            {results.slice(0, 5).map((result) => (
               <Link
                 key={result.id}
                 href={`/article/${result.slug}`}
@@ -111,6 +113,18 @@ export default function SearchBar() {
                 <div className="text-xs text-gray-400 line-clamp-1 mt-1">{result.excerpt}</div>
               </Link>
             ))}
+            {results.length > 5 && (
+              <button
+                onClick={() => {
+                  router.push(`/pencarian?q=${encodeURIComponent(query)}`);
+                  setQuery("");
+                  setIsOpen(false);
+                }}
+                className="w-full text-center py-3 text-sm text-yellow-400 hover:text-yellow-300 border-t border-gray-800 font-bold uppercase tracking-wider"
+              >
+                Lihat semua {results.length} hasil →
+              </button>
+            )}
           </div>
         </div>
       )}
