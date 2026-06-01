@@ -1,9 +1,11 @@
 import { getQuestions } from '@/lib/quiz-data';
 import QuizClient from './QuizClient';
+import { getQuizResults } from '@/lib/quiz-db';
 import Ornament from '@/components/Ornament';
 
-export default function KuisPage() {
+export default async function KuisPage() {
   const questions = getQuestions();
+  const leaderboard = await getQuizResults(10);
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden flex flex-col font-sans">
@@ -12,7 +14,7 @@ export default function KuisPage() {
       
       <main className="flex-1 flex items-center justify-center relative z-10 p-4">
         {questions.length > 0 ? (
-          <QuizClient questions={questions} />
+          <QuizClient questions={questions} leaderboard={leaderboard} />
         ) : (
           <div className="text-center">
             <h1 className="text-4xl font-bold font-serif text-yellow-400 mb-4">Kuis Belum Tersedia</h1>

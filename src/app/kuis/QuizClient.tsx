@@ -63,7 +63,7 @@ const playIncorrectSound = () => {
   }
 };
 
-export default function QuizClient({ questions }: { questions: Question[] }) {
+export default function QuizClient({ questions, leaderboard }: { questions: Question[]; leaderboard?: Array<{ playerName: string; score: number; totalQuestions: number; category: string }> }) {
   const [gameState, setGameState] = useState<'START' | 'PLAYING' | 'FINISHED'>('START');
   const [playerName, setPlayerName] = useState('');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

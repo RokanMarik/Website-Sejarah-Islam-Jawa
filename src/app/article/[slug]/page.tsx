@@ -4,12 +4,13 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Sidebar from "@/components/Sidebar";
-import Ornament from "@/components/Ornament";
 import Glossary from "@/components/Glossary";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RelatedArticles from "@/components/RelatedArticles";
 import ShareButtons from "@/components/ShareButtons";
+import BookmarkButton from "@/components/BookmarkButton";
 import ReadingProgress from "@/components/ReadingProgress";
+import ReadingTracker from "@/components/ReadingTracker";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -63,6 +64,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
   return (
     <article className="pb-20 bg-transparent min-h-screen relative overflow-hidden text-gray-200">
+      <ReadingTracker slug={article.slug} title={article.title} />
       
       {/* Reading Progress Bar */}
       <ReadingProgress />
@@ -189,7 +191,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <RelatedArticles currentArticle={article} allArticles={articles} />
             
             {/* Share Buttons */}
-            <ShareButtons title={article.title} slug={article.slug} />
+            <div className="flex items-center gap-2">
+              <BookmarkButton article={article} />
+              <ShareButtons title={article.title} slug={article.slug} />
+            </div>
             
             {/* JSON-LD Structured Data */}
             <script

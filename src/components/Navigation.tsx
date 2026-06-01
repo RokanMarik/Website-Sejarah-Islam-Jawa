@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import SearchBar from "./SearchBar";
+import MobileMenu from "./MobileMenu";
+import SearchModal from "./SearchModal";
 
 export default function Navigation() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -81,6 +83,10 @@ export default function Navigation() {
             <Link href="/kuis" className="hover:text-yellow-400 transition-colors h-full flex items-center">Kuis</Link>
             
             <SearchBar />
+            <SearchTrigger />
+            <Link href="/bookmarks" className="hover:text-yellow-400 transition-colors h-full flex items-center" aria-label="Bookmark">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
+            </Link>
             <ThemeToggle />
           </nav>
           
@@ -101,41 +107,25 @@ export default function Navigation() {
       </div>
 
       {/* Mobile Menu Dropdown */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-neutral-900 border-b-2 border-yellow-400 py-4 px-4 shadow-xl">
-          <Link href="/" className="block text-yellow-400 font-bold uppercase py-3 border-b border-gray-800" onClick={() => setIsMobileMenuOpen(false)}>Beranda</Link>
-          
-          <div className="px-2 py-3 border-b border-gray-800">
-            <SearchBar />
-          </div>
-          
-          <div className="py-3 border-b border-gray-800">
-            <div className="text-gray-400 font-bold uppercase text-xs mb-3">Kategori Kerajaan</div>
-            <div className="grid grid-cols-2 gap-4 pl-2">
-              {menus.map((menu) => (
-                <div key={menu.title} className="mb-2">
-                  <div className="text-yellow-600 font-bold text-sm mb-2">{menu.title}</div>
-                  <div className="space-y-2">
-                    {menu.submenus.map(sub => (
-                      <Link key={sub} href={`/kategori/${menu.title.toLowerCase()}/${sub.toLowerCase()}`} className="block text-gray-300 text-xs hover:text-white" onClick={() => setIsMobileMenuOpen(false)}>
-                        - {sub}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          <Link href="/silsilah" className="block text-yellow-400 font-bold uppercase py-3 border-b border-gray-800" onClick={() => setIsMobileMenuOpen(false)}>Silsilah Kerajaan</Link>
-          <Link href="/kamus" className="block text-yellow-400 font-bold uppercase py-3 border-b border-gray-800" onClick={() => setIsMobileMenuOpen(false)}>Kamus Sejarah</Link>
-          <Link href="/kuis" className="block text-yellow-400 font-bold uppercase py-3 border-b border-gray-800" onClick={() => setIsMobileMenuOpen(false)}>Kuis Sejarah</Link>
-          <div className="py-3 flex justify-between items-center">
-            <span className="text-gray-400 font-bold uppercase text-xs">Tema Layar</span>
-            <ThemeToggle />
-          </div>
-        </div>
-      )}
+      <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
     </header>
+  );
+}
+
+function SearchTrigger() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button
+        id="search-trigger"
+        onClick={() => setOpen(true)}
+        className="hover:text-yellow-400 transition-colors h-full flex items-center gap-2 text-gray-400"
+        aria-label="Cari"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        <span className="text-xs bg-gray-800 px-2 py-0.5 rounded">⌘K</span>
+      </button>
+      <SearchModal isOpen={open} onClose={() => setOpen(false)} />
+    </>
   );
 }
