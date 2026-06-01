@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bun(run)",
+      "Bun(test)",
+      "Bun(run --bun)",
+      "Bun(install)",
+      "Bun(add)",
+      "Bun(remove)",
+      "Bunx"
+    ],
+    "deny": []
+  },
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "skills": [
+    "add-feature",
+    "fix-bug",
+    "review-code",
+    "refactor",
+    "write-tests",
+    "security-check"
+  ]
+}
