@@ -4,6 +4,42 @@ const dbUrl = process.env.DATABASE_URL || "file:local.db";
 
 let db: Client | null = null;
 
+// In-memory cache
+interface CacheEntry<T> {
+  data: T;
+  timestamp: number;
+}
+
+const cache = new Map<string, CacheEntry<any>>();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+function getCached<T>(key: string): T | null {
+  const entry = cache.get(key);
+  if (entry && Date.now() - entry.timestamp < CACHE_TTL) {
+    return entry.data as T;
+  }
+  if (entry) {
+    cache.delete(key);
+  }
+  return null;
+}
+
+function setCache<T>(key: string, data: T): void {
+  cache.set(key, { data, timestamp: Date.now() });
+}
+
+export function invalidateCache(pattern?: string): void {
+  if (pattern) {
+    for (const key of cache.keys()) {
+      if (key.includes(pattern)) {
+        cache.delete(key);
+      }
+    }
+  } else {
+    cache.clear();
+  }
+}
+
 export function getDb(): Client {
   if (!db) {
     db = createClient({ url: dbUrl });
@@ -56,15 +92,21 @@ export async function initDb() {
 }
 
 export async function getArticles() {
+  const cached = getCached('articles:all');
+  if (cached) return cached;
+
   const database = getDb();
   const result = await database.execute("SELECT * FROM articles ORDER BY date DESC");
-  return result.rows.map(row => ({
+  const articles = result.rows.map(row => ({
     ...row,
     isHeadline: (row as any).isHeadline === 1,
     tags: (row as any).tags ? JSON.parse((row as any).tags as string) : [],
     type: (row as any).type || 'regular',
     references: (row as any).references ? JSON.parse((row as any).references as string) : [],
   }));
+
+  setCache('articles:all', articles);
+  return articles;
 }
 
 export async function saveArticles(articles: any[]) {
@@ -98,6 +140,10 @@ export async function saveArticles(articles: any[]) {
 }
 
 export async function getArticleBySlug(slug: string) {
+  const cacheKey = `article:${slug}`;
+  const cached = getCached(cacheKey);
+  if (cached) return cached;
+
   const database = getDb();
   const result = await database.execute({
     sql: "SELECT * FROM articles WHERE slug = ?",
@@ -105,11 +151,14 @@ export async function getArticleBySlug(slug: string) {
   });
   if (result.rows.length === 0) return null;
   const row = result.rows[0];
-  return {
+  const article = {
     ...row,
     isHeadline: (row as any).isHeadline === 1,
     tags: (row as any).tags ? JSON.parse((row as any).tags as string) : [],
     type: (row as any).type || 'regular',
     references: (row as any).references ? JSON.parse((row as any).references as string) : [],
   };
+
+  setCache(cacheKey, article);
+  return article;
 }
