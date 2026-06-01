@@ -1,6 +1,20 @@
 'use client';
 import { useState } from 'react';
 
+const eventToArticleSlug: Record<string, string> = {
+  "Berdirinya Kesultanan Demak": "kerajaan-pajang",
+  "Kedaulatan Demak": "kerajaan-pajang",
+  "Hadiah Alas Mentaok": "bangkitnya-mataram-islam-panembahan-senopati",
+  "Kedaulatan Mataram": "bangkitnya-mataram-islam-panembahan-senopati",
+  "Sultan Agung Bertahta": "bangkitnya-mataram-islam-panembahan-senopati",
+  "Gelar Sultan": "bangkitnya-mataram-islam-panembahan-senopati",
+  "Perjanjian Giyanti": "kerajaan-mataram",
+  "Sultan Trenggono Wafat": "kerajaan-pajang",
+  "Masa Transisi ke Pajang": "kerajaan-pajang",
+  "Ekspansi Senopati": "bangkitnya-mataram-islam-panembahan-senopati",
+  "Serbuan ke Batavia": "bangkitnya-mataram-islam-panembahan-senopati",
+};
+
 export default function Timeline() {
   const [showAll, setShowAll] = useState(false);
   const events = [
@@ -53,17 +67,37 @@ export default function Timeline() {
 
                 {/* Content Box */}
                 <div className={`w-full pl-14 md:pl-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:ml-auto md:text-left'}`}>
-                  <div className="bg-neutral-900 border border-gray-800 p-6 rounded-xl shadow-lg group-hover:border-yellow-600 transition-colors duration-300">
-                    <div className="text-3xl font-black text-white font-serif mb-1 group-hover:text-yellow-400 transition-colors drop-shadow-md">
-                      {event.year}
+                  {eventToArticleSlug[event.title] ? (
+                    <a 
+                      href={`/article/${eventToArticleSlug[event.title]}`}
+                      className="block bg-neutral-900 border border-gray-800 p-6 rounded-xl shadow-lg group-hover:border-yellow-600 transition-colors duration-300 cursor-pointer hover:bg-neutral-800"
+                    >
+                      <div className="text-3xl font-black text-white font-serif mb-1 group-hover:text-yellow-400 transition-colors drop-shadow-md">
+                        {event.year}
+                      </div>
+                      <div className="text-sm font-bold text-yellow-600 uppercase tracking-widest mb-3 flex items-center gap-2 justify-center md:justify-inherit">
+                        {event.title}
+                        <svg className="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </div>
+                      <div className="text-sm text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
+                        {event.desc}
+                      </div>
+                    </a>
+                  ) : (
+                    <div className="bg-neutral-900 border border-gray-800 p-6 rounded-xl shadow-lg group-hover:border-yellow-600 transition-colors duration-300">
+                      <div className="text-3xl font-black text-white font-serif mb-1 group-hover:text-yellow-400 transition-colors drop-shadow-md">
+                        {event.year}
+                      </div>
+                      <div className="text-sm font-bold text-yellow-600 uppercase tracking-widest mb-3">
+                        {event.title}
+                      </div>
+                      <div className="text-sm text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
+                        {event.desc}
+                      </div>
                     </div>
-                    <div className="text-sm font-bold text-yellow-600 uppercase tracking-widest mb-3">
-                      {event.title}
-                    </div>
-                    <div className="text-sm text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
-                      {event.desc}
-                    </div>
-                  </div>
+                  )}
                 </div>
                 
               </div>
