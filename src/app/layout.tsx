@@ -3,6 +3,7 @@ import { Inter, Merriweather } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import AudioPlayer from "@/components/AudioPlayer";
+import NewsletterForm from "@/components/NewsletterForm";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -78,6 +79,13 @@ export default function RootLayout({
               </a>
             </div>
             <div className="w-24 h-1 bg-yellow-400"></div>
+            
+            {/* Newsletter */}
+            <div className="w-full max-w-md text-center mb-4">
+              <h3 className="text-sm font-bold text-yellow-400 uppercase tracking-widest mb-3">Newsletter</h3>
+              <NewsletterForm />
+            </div>
+            
             <div className="text-xs uppercase tracking-widest">© {new Date().getFullYear()} Kerajaan Islam Pedalaman Jawa</div>
           </div>
         </footer>
