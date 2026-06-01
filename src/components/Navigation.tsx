@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import ThemeController from "./ThemeController";
+import SearchBar from "./SearchBar";
 
 export default function Navigation() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -79,6 +80,7 @@ export default function Navigation() {
             <Link href="/kamus" className="hover:text-yellow-400 transition-colors h-full flex items-center">Kamus</Link>
             <Link href="/kuis" className="hover:text-yellow-400 transition-colors h-full flex items-center">Kuis</Link>
             
+            <SearchBar />
             <ThemeController />
           </nav>
           
@@ -102,6 +104,10 @@ export default function Navigation() {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-neutral-900 border-b-2 border-yellow-400 py-4 px-4 shadow-xl">
           <Link href="/" className="block text-yellow-400 font-bold uppercase py-3 border-b border-gray-800" onClick={() => setIsMobileMenuOpen(false)}>Beranda</Link>
+          
+          <div className="px-2 py-3 border-b border-gray-800">
+            <SearchBar />
+          </div>
           
           <div className="py-3 border-b border-gray-800">
             <div className="text-gray-400 font-bold uppercase text-xs mb-3">Kategori Kerajaan</div>
