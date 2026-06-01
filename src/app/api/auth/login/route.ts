@@ -1,7 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { checkRateLimit, cleanupRateLimitStore } from "@/lib/rate-limiter";
+import { generateCsrfToken } from "@/lib/csrf";
 
 export async function POST(request: NextRequest) {
+  cleanupRateLimitStore();
+
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || 
+             request.headers.get("x-real-ip") || 
+             "unknown";
+
+  const rateLimit = checkRateLimit(ip);
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { success: false, error: "Too many attempts. Please try again later." },
+      { 
+        status: 429,
+        headers: { "Retry-After": String(rateLimit.retryAfter || 900) }
+      }
+    );
+  }
+
   const body = await request.json();
   const { username, password } = body;
 
@@ -24,7 +43,8 @@ export async function POST(request: NextRequest) {
       maxAge: 60 * 60 * 24,
       path: "/",
     });
-    return NextResponse.json({ success: true });
+    const csrfToken = await generateCsrfToken();
+    return NextResponse.json({ success: true, csrfToken });
   }
 
   return NextResponse.json({ success: false, error: "Invalid credentials" }, { status: 401 });

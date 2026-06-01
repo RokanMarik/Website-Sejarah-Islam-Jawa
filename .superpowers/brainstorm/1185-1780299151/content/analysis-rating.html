@@ -1,0 +1,131 @@
+<h2>📊 Analisis Website NusaHistoria</h2>
+<p class="subtitle">Rating menyeluruh — 7 kategori, total skor dari 100</p>
+
+<div style="background: rgba(250,204,21,0.1); border: 1px solid #facc15; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+    <span style="font-size: 24px; font-weight: bold; color: #facc15;">SKOR TOTAL: 62/100</span>
+    <span style="background: #eab308; color: #000; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold;">⚠️ NEEDS WORK</span>
+  </div>
+</div>
+
+<h3 style="color: #facc15; border-bottom: 1px solid #333; padding-bottom: 8px;">Detail per Kategori</h3>
+
+<div class="options" data-multiselect>
+  <div class="option" data-choice="code" onclick="toggleSelect(this)">
+    <div style="flex:1">
+      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+        <h3 style="margin:0">🏗️ Code Quality & Architecture</h3>
+        <span style="color: #22c55e; font-weight: bold;">75/100</span>
+      </div>
+      <p style="margin:0 0 8px 0; font-size: 14px;">Next.js App Router ✅, TypeScript strict ✅, path aliases ✅, komponen terstruktur rapi</p>
+      <div style="background:#1a1a1a; padding:8px; border-radius:4px; font-size:12px;">
+        <strong style="color:#22c55e">✅ Strengths:</strong> Server components, proper routing, clean separation<br>
+        <strong style="color:#ef4444">❌ Issues:</strong> No tests (0%), data.json & SQLite dual source, no error boundaries
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="perf" onclick="toggleSelect(this)">
+    <div style="flex:1">
+      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+        <h3 style="margin:0">⚡ Performance & Optimization</h3>
+        <span style="color: #f59e0b; font-weight: bold;">55/100</span>
+      </div>
+      <p style="margin:0 0 8px 0; font-size: 14px;">Next.js Image component dipakai, tapi belum ada lazy loading & code splitting optimal</p>
+      <div style="background:#1a1a1a; padding:8px; border-radius:4px; font-size:12px;">
+        <strong style="color:#22c55e">✅ Strengths:</strong> next/image, font optimization (Inter, Merriweather)<br>
+        <strong style="color:#ef4444">❌ Issues:</strong> No dynamic imports for heavy components, no caching strategy, no compression config, JavaMap client-side heavy
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="seo" onclick="toggleSelect(this)">
+    <div style="flex:1">
+      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+        <h3 style="margin:0">🔍 SEO & Discoverability</h3>
+        <span style="color: #22c55e; font-weight: bold;">80/100</span>
+      </div>
+      <p style="margin:0 0 8px 0; font-size: 14px;">Metadata lengkap, OG images, RSS feed, sitemap, robots.txt — sudah bagus</p>
+      <div style="background:#1a1a1a; padding:8px; border-radius:4px; font-size:12px;">
+        <strong style="color:#22c55e">✅ Strengths:</strong> Dynamic metadata, OG images API, RSS, sitemap.xml, robots.txt, structured URLs<br>
+        <strong style="color:#ef4444">❌ Issues:</strong> No JSON-LD structured data, no hreflang, no canonical URL enforcement
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="ui" onclick="toggleSelect(this)">
+    <div style="flex:1">
+      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+        <h3 style="margin:0">🎨 UI/UX & Design</h3>
+        <span style="color: #22c55e; font-weight: bold;">70/100</span>
+      </div>
+      <p style="margin:0 0 8px 0; font-size: 14px;">Keraton theme konsisten, dark/light mode, mega menu, timeline & JavaMap interaktif</p>
+      <div style="background:#1a1a1a; padding:8px; border-radius:4px; font-size:12px;">
+        <strong style="color:#22c55e">✅ Strengths:</strong> Unique visual identity, theme toggle, responsive grid, reading progress bar<br>
+        <strong style="color:#ef4444">❌ Issues:</strong> Mobile menu basic, no animations/transitions polish, search UX could be better, no skeleton loaders everywhere
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="sec" onclick="toggleSelect(this)">
+    <div style="flex:1">
+      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+        <h3 style="margin:0">🔒 Security</h3>
+        <span style="color: #ef4444; font-weight: bold;">40/100</span>
+      </div>
+      <p style="margin:0 0 8px 0; font-size: 14px;">Admin auth basic, hardcoded default password, no rate limiting, no input sanitization</p>
+      <div style="background:#1a1a1a; padding:8px; border-radius:4px; font-size:12px;">
+        <strong style="color:#22c55e">✅ Strengths:</strong> httpOnly cookies, secure flag in production<br>
+        <strong style="color:#ef4444">❌ Issues:</strong> Default password in code, no rate limiting on login, upload endpoint no file type validation, no CSRF protection, SQL injection risk (better-sqlite3 raw queries)
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="devops" onclick="toggleSelect(this)">
+    <div style="flex:1">
+      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+        <h3 style="margin:0">🚀 Deployment & DevOps</h3>
+        <span style="color: #ef4444; font-weight: bold;">35/100</span>
+      </div>
+      <p style="margin:0 0 8px 0; font-size: 14px;">No vercel.json, no CI/CD pipeline, no environment management, no monitoring</p>
+      <div style="background:#1a1a1a; padding:8px; border-radius:4px; font-size:12px;">
+        <strong style="color:#22c55e">✅ Strengths:</strong> Next.js compatible with Vercel, bun.lock present<br>
+        <strong style="color:#ef4444">❌ Issues:</strong> No vercel.json config, no CI/CD, no tests, no environment variables management, database file not suited for serverless (SQLite)
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="content" onclick="toggleSelect(this)">
+    <div style="flex:1">
+      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+        <h3 style="margin:0">📚 Content & Features</h3>
+        <span style="color: #f59e0b; font-weight: bold;">65/100</span>
+      </div>
+      <p style="margin:0 0 8px 0; font-size: 14px;">Artikel, kuis, kamus, silsilah, timeline, peta Jawa — fitur lengkap tapi ada yang bisa ditingkatkan</p>
+      <div style="background:#1a1a1a; padding:8px; border-radius:4px; font-size:12px;">
+        <strong style="color:#22c55e">✅ Strengths:</strong> Rich content types, interactive elements, audio player, admin CMS<br>
+        <strong style="color:#ef4444">❌ Issues:</strong> No comments system, no bookmarks, no search history, quiz results not persisted, no pagination on article list
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 24px; padding: 16px; background: rgba(239,68,68,0.1); border: 1px solid #ef4444; border-radius: 8px;">
+  <h3 style="color: #ef4444; margin: 0 0 8px 0;">🚨 Critical Issues (Harus Diperbaiki)</h3>
+  <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+    <li>Default password hardcoded di auth route</li>
+    <li>SQLite tidak cocok untuk Vercel serverless (file-based, no persistence)</li>
+    <li>No tests — 0% code coverage</li>
+    <li>Upload API tanpa validasi file type</li>
+  </ul>
+</div>
+
+<div style="margin-top: 16px; padding: 16px; background: rgba(34,197,94,0.1); border: 1px solid #22c55e; border-radius: 8px;">
+  <h3 style="color: #22c55e; margin: 0 0 8px 0;">💡 Quick Wins (Bisa Cepat Diperbaiki)</h3>
+  <ul style="margin: 0; padding-left: 20px; font-size: 14px;">
+    <li>Tambah vercel.json untuk optimasi deploy</li>
+    <li>Tambah JSON-LD structured data</li>
+    <li>Dynamic imports untuk JavaMap & heavy components</li>
+    <li>Environment variables untuk semua secrets</li>
+  </ul>
+</div>

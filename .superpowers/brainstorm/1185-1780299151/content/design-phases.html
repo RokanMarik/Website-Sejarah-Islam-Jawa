@@ -1,0 +1,147 @@
+<h2>📐 Design: Phased Comprehensive Improvement</h2>
+<p class="subtitle">3 fase — klik untuk approve atau kasih feedback</p>
+
+<!-- Phase 1 -->
+<div style="margin-bottom: 24px; padding: 16px; background: rgba(239,68,68,0.1); border: 1px solid #ef4444; border-radius: 8px;">
+  <h3 style="color: #ef4444; margin: 0 0 12px 0;">🔒 Phase 1: Security & DevOps Foundation</h3>
+  <p style="font-size: 14px; margin: 0 0 12px 0;"><strong>Goal:</strong> Fix critical issues, prepare for safe production deployment</p>
+  
+  <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>.env</code></td>
+      <td style="padding: 6px;">Move all secrets to environment variables (ADMIN_USERNAME, ADMIN_PASSWORD, DATABASE_URL)</td>
+      <td style="padding: 6px;">🔴 Critical</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>auth/rate-limit</code></td>
+      <td style="padding: 6px;">Add rate limiting to login endpoint (5 attempts/15min)</td>
+      <td style="padding: 6px;">🔴 Critical</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>upload/validate</code></td>
+      <td style="padding: 6px;">File type validation (images only), size limit, sanitization</td>
+      <td style="padding: 6px;">🔴 Critical</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>db/turso</code></td>
+      <td style="padding: 6px;">Replace SQLite with Turso (libSQL) — serverless compatible, same API</td>
+      <td style="padding: 6px;">🔴 Critical</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>vercel.json</code></td>
+      <td style="padding: 6px;">Add Vercel config: routes, headers, caching, rewrites</td>
+      <td style="padding: 6px;">🟡 High</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>csrf-protection</code></td>
+      <td style="padding: 6px;">Add CSRF tokens for admin forms and API mutations</td>
+      <td style="padding: 6px;">🟡 High</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>basic-tests</code></td>
+      <td style="padding: 6px;">Add Vitest setup + basic tests for auth, search, article CRUD</td>
+      <td style="padding: 6px;">🟡 High</td>
+    </tr>
+  </table>
+  
+  <div style="margin-top: 12px; font-size: 12px; color: #94a3b8;">
+    ⏱️ Est: 3-4 hari &nbsp;|&nbsp; 📁 Files: ~15 &nbsp;|&nbsp; 🚀 Deploy: Vercel ready
+  </div>
+</div>
+
+<!-- Phase 2 -->
+<div style="margin-bottom: 24px; padding: 16px; background: rgba(245,158,11,0.1); border: 1px solid #f59e0b; border-radius: 8px;">
+  <h3 style="color: #f59e0b; margin: 0 0 12px 0;">⚡ Phase 2: Performance & SEO Enhancement</h3>
+  <p style="font-size: 14px; margin: 0 0 12px 0;"><strong>Goal:</strong> Optimize Core Web Vitals, improve search visibility</p>
+  
+  <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>dynamic-imports</code></td>
+      <td style="padding: 6px;">Lazy load JavaMap, Timeline, AudioPlayer, JoditEditor (next/dynamic)</td>
+      <td style="padding: 6px;">🟡 High</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>image-optimization</code></td>
+      <td style="padding: 6px;">Add sizes, priority, placeholder blur for all next/image instances</td>
+      <td style="padding: 6px;">🟡 High</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>json-ld</code></td>
+      <td style="padding: 6px;">Add Article, Organization, BreadcrumbList structured data</td>
+      <td style="padding: 6px;">🟡 High</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>caching</code></td>
+      <td style="padding: 6px;">Add revalidate, ISR for articles, static generation for category pages</td>
+      <td style="padding: 6px;">🟡 High</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>sitemap-enhance</code></td>
+      <td style="padding: 6px;">Dynamic sitemap with lastmod, changefreq, priority per page type</td>
+      <td style="padding: 6px;">🟢 Medium</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>font-swap</code></td>
+      <td style="padding: 6px;">Add font-display: swap, preload critical fonts</td>
+      <td style="padding: 6px;">🟢 Medium</td>
+    </tr>
+  </table>
+  
+  <div style="margin-top: 12px; font-size: 12px; color: #94a3b8;">
+    ⏱️ Est: 2-3 hari &nbsp;|&nbsp; 📁 Files: ~12 &nbsp;|&nbsp; 🚀 Target: Lighthouse 90+
+  </div>
+</div>
+
+<!-- Phase 3 -->
+<div style="margin-bottom: 24px; padding: 16px; background: rgba(34,197,94,0.1); border: 1px solid #22c55e; border-radius: 8px;">
+  <h3 style="color: #22c55e; margin: 0 0 12px 0;">🎨 Phase 3: Features & UI Polish</h3>
+  <p style="font-size: 14px; margin: 0 0 12px 0;"><strong>Goal:</strong> Enhanced user experience, new features, visual polish</p>
+  
+  <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>comments</code></td>
+      <td style="padding: 6px;">Giscus integration (GitHub Discussions) — zero backend needed</td>
+      <td style="padding: 6px;">🟡 High</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>bookmarks</code></td>
+      <td style="padding: 6px;">localStorage-based bookmarks + reading history per user</td>
+      <td style="padding: 6px;">🟡 High</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>quiz-persist</code></td>
+      <td style="padding: 6px;">Save quiz results to Turso, leaderboard, retry history</td>
+      <td style="padding: 6px;">🟡 High</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>search-enhance</code></td>
+      <td style="padding: 6px;">Fuzzy search, search suggestions, recent searches, keyboard shortcut (Ctrl+K)</td>
+      <td style="padding: 6px;">🟢 Medium</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>animations</code></td>
+      <td style="padding: 6px;">Framer Motion for page transitions, scroll animations, hover effects</td>
+      <td style="padding: 6px;">🟢 Medium</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>mobile-menu</code></td>
+      <td style="padding: 6px;">Improved mobile nav with slide-out drawer, search integration</td>
+      <td style="padding: 6px;">🟢 Medium</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #333;">
+      <td style="padding: 6px;"><code>pagination</code></td>
+      <td style="padding: 6px;">Add pagination/infinite scroll to article lists & search results</td>
+      <td style="padding: 6px;">🟢 Medium</td>
+    </tr>
+  </table>
+  
+  <div style="margin-top: 12px; font-size: 12px; color: #94a3b8;">
+    ⏱️ Est: 4-5 hari &nbsp;|&nbsp; 📁 Files: ~20 &nbsp;|&nbsp; 🚀 Feature complete
+  </div>
+</div>
+
+<div style="padding: 16px; background: rgba(250,204,21,0.1); border: 1px solid #facc15; border-radius: 8px;">
+  <h3 style="color: #facc15; margin: 0 0 8px 0;">📊 Summary</h3>
+  <p style="margin: 0; font-size: 14px;"><strong>Total:</strong> ~2 minggu kerja &nbsp;|&nbsp; <strong>Files changed:</strong> ~47 &nbsp;|&nbsp; <strong>Deploys:</strong> 3 (one per phase)</p>
+  <p style="margin: 8px 0 0 0; font-size: 14px;"><strong>Database:</strong> Turso (libSQL) — compatible with existing better-sqlite3 API, zero migration needed</p>
+</div>
