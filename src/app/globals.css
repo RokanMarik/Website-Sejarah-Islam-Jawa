@@ -248,3 +248,16 @@ body.theme-sepia .quiz-feedback-incorrect-bg {
   border-color: #b91c1c !important;
   background-color: rgba(185, 28, 28, 0.1) !important;
 }
+
+/* === ACCESSIBILITY === */
+*:focus-visible {
+  outline: 2px solid #eab308;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible),
+input:focus:not(:focus-visible) {
+  outline: none;
+}

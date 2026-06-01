@@ -25,7 +25,7 @@ export default function Navigation() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-black border-b-2 border-yellow-400 shadow-md font-sans">
+    <header className="sticky top-0 z-50 w-full bg-black border-b-2 border-yellow-400 shadow-md font-sans" role="banner">
       {/* Top utility bar */}
       <div className="bg-yellow-400 text-black text-xs py-1.5 px-4 hidden md:block border-b border-yellow-500">
         <div className="max-w-7xl mx-auto flex justify-between items-center font-bold tracking-widest uppercase">
@@ -41,7 +41,7 @@ export default function Navigation() {
             <span className="text-3xl font-black tracking-tight text-white uppercase font-serif">Nusa<span className="text-yellow-400">Historia</span></span>
           </Link>
           
-          <nav className="hidden md:flex items-center gap-8 text-sm font-bold text-gray-300 uppercase tracking-widest h-full relative">
+          <nav className="hidden md:flex items-center gap-8 text-sm font-bold text-gray-300 uppercase tracking-widest h-full relative" aria-label="Navigasi utama">
             <Link href="/" className="hover:text-yellow-400 transition-colors h-full flex items-center">Beranda</Link>
             
             {/* Hierarchical Dropdown Menu */}

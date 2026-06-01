@@ -6,6 +6,7 @@ import AudioPlayer from "@/components/AudioPlayer";
 import NewsletterForm from "@/components/NewsletterForm";
 import BackToTop from "@/components/BackToTop";
 import Analytics from "@/components/Analytics";
+import SkipLink from "@/components/SkipLink";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -68,8 +69,9 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${inter.variable} ${merriweather.variable} antialiased bg-keraton-pattern text-gray-200 font-sans min-h-screen selection:bg-yellow-400 selection:text-black transition-colors duration-1000`}
       >
+        <SkipLink />
         <Navigation />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <AudioPlayer />
         <BackToTop />
         <Analytics />
