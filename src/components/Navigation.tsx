@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import ThemeController from "./ThemeController";
+import ThemeToggle from "./ThemeToggle";
 import SearchBar from "./SearchBar";
 
 export default function Navigation() {
@@ -81,7 +81,7 @@ export default function Navigation() {
             <Link href="/kuis" className="hover:text-yellow-400 transition-colors h-full flex items-center">Kuis</Link>
             
             <SearchBar />
-            <ThemeController />
+            <ThemeToggle />
           </nav>
           
           <div className="flex md:hidden items-center">
@@ -132,7 +132,7 @@ export default function Navigation() {
           <Link href="/kuis" className="block text-yellow-400 font-bold uppercase py-3 border-b border-gray-800" onClick={() => setIsMobileMenuOpen(false)}>Kuis Sejarah</Link>
           <div className="py-3 flex justify-between items-center">
             <span className="text-gray-400 font-bold uppercase text-xs">Tema Layar</span>
-            <ThemeController />
+            <ThemeToggle />
           </div>
         </div>
       )}

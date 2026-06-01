@@ -19,6 +19,45 @@ html {
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23facc15' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
+/* === LIGHT MODE OVERRIDES === */
+body.theme-light {
+  background-color: #ffffff !important;
+  color: #1a1a1a !important;
+  background-image: none !important;
+}
+
+body.theme-light .bg-neutral-900, body.theme-light .bg-neutral-950,
+body.theme-light .bg-gray-900, body.theme-light .bg-gray-900\/50,
+body.theme-light .bg-black\/50, body.theme-light .bg-black { background-color: #f3f4f6 !important; }
+body.theme-light .mega-menu { background-color: #ffffff !important; }
+
+body.theme-light .text-white, body.theme-light .text-gray-200, body.theme-light .text-gray-300 { color: #1a1a1a !important; }
+body.theme-light .text-gray-400, body.theme-light .text-gray-500 { color: #4b5563 !important; }
+body.theme-light .text-yellow-400, body.theme-light .text-yellow-500, body.theme-light .text-yellow-600 { color: #ca8a04 !important; }
+body.theme-light .text-yellow-100 { color: #1a1a1a !important; }
+
+body.theme-light .border-gray-800, body.theme-light .border-gray-900, body.theme-light .border-gray-700 { border-color: #e5e7eb !important; }
+body.theme-light .border-yellow-400, body.theme-light .border-yellow-500 { border-color: #ca8a04 !important; }
+
+body.theme-light .article-content { color: #1a1a1a !important; }
+body.theme-light .article-content p { color: #1a1a1a !important; }
+body.theme-light .article-content h2, body.theme-light .article-content h3 { color: #ca8a04 !important; border-bottom-color: #e5e7eb !important; }
+body.theme-light .article-content strong { color: #ca8a04 !important; }
+body.theme-light .article-content ol, body.theme-light .article-content ul { color: #1a1a1a !important; }
+
+body.theme-light img { filter: none !important; }
+
+body.theme-light .audio-player-btn:not(.bg-yellow-500) {
+  background-color: #f3f4f6 !important;
+  border-color: #ca8a04 !important;
+  color: #ca8a04 !important;
+}
+
+body.theme-light .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; }
+body.theme-light .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #ca8a04; }
+
+body.theme-light .quiz-feedback-modal { background-color: #ffffff !important; color: #1a1a1a !important; border-color: #e5e7eb !important; }
+
 /* === SEPIA MODE (NASKAH KUNO) OVERRIDES === */
 body.theme-sepia {
   background-color: #f4ecd8 !important; /* Kertas perkamen */
