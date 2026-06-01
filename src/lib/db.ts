@@ -3,6 +3,57 @@ import { createClient, Client } from "@libsql/client";
 const dbUrl = process.env.DATABASE_URL || "file:local.db";
 
 let db: Client | null = null;
+let dbInitialized = false;
+let initPromise: Promise<void> | null = null;
+
+async function ensureDbInitialized() {
+  if (dbInitialized) return;
+  if (!initPromise) {
+    initPromise = (async () => {
+      const database = getDb();
+      await database.execute(`
+        CREATE TABLE IF NOT EXISTS articles (
+          id TEXT PRIMARY KEY,
+          slug TEXT UNIQUE NOT NULL,
+          title TEXT NOT NULL,
+          excerpt TEXT,
+          content TEXT,
+          coverImage TEXT,
+          category TEXT,
+          author TEXT,
+          readTime TEXT,
+          date TEXT,
+          isHeadline INTEGER DEFAULT 0,
+          authorInstagram TEXT,
+          subcategory TEXT,
+          tags TEXT,
+          type TEXT DEFAULT 'regular',
+          "references" TEXT
+        )
+      `);
+      await database.execute(`
+        CREATE TABLE IF NOT EXISTS quiz_results (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          playerName TEXT NOT NULL,
+          score INTEGER NOT NULL,
+          totalQuestions INTEGER NOT NULL,
+          category TEXT DEFAULT 'Campuran',
+          rating TEXT,
+          createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
+      await database.execute(`
+        CREATE TABLE IF NOT EXISTS dictionary (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          term TEXT UNIQUE NOT NULL,
+          definition TEXT NOT NULL
+        )
+      `);
+      dbInitialized = true;
+    })();
+  }
+  await initPromise;
+}
 
 // In-memory cache
 interface CacheEntry<T> {
@@ -48,50 +99,12 @@ export function getDb(): Client {
 }
 
 export async function initDb() {
-  const database = getDb();
-  await database.execute(`
-    CREATE TABLE IF NOT EXISTS articles (
-      id TEXT PRIMARY KEY,
-      slug TEXT UNIQUE NOT NULL,
-      title TEXT NOT NULL,
-      excerpt TEXT,
-      content TEXT,
-      coverImage TEXT,
-      category TEXT,
-      author TEXT,
-      readTime TEXT,
-      date TEXT,
-      isHeadline INTEGER DEFAULT 0,
-      authorInstagram TEXT,
-      subcategory TEXT,
-      tags TEXT,
-      type TEXT DEFAULT 'regular',
-      "references" TEXT
-    )
-  `);
-
-  await database.execute(`
-    CREATE TABLE IF NOT EXISTS quiz_results (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      playerName TEXT NOT NULL,
-      score INTEGER NOT NULL,
-      totalQuestions INTEGER NOT NULL,
-      category TEXT DEFAULT 'Campuran',
-      rating TEXT,
-      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-  `);
-
-  await database.execute(`
-    CREATE TABLE IF NOT EXISTS dictionary (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      term TEXT UNIQUE NOT NULL,
-      definition TEXT NOT NULL
-    )
-  `);
+  await ensureDbInitialized();
 }
 
 export async function getArticles() {
+  await ensureDbInitialized();
+  
   const cached = getCached('articles:all');
   if (cached) return cached;
 
@@ -140,6 +153,8 @@ export async function saveArticles(articles: any[]) {
 }
 
 export async function getArticleBySlug(slug: string) {
+  await ensureDbInitialized();
+  
   const cacheKey = `article:${slug}`;
   const cached = getCached(cacheKey);
   if (cached) return cached;
