@@ -2,6 +2,7 @@ import { getArticles } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Sidebar from "@/components/Sidebar";
 import Ornament from "@/components/Ornament";
 import Glossary from "@/components/Glossary";
@@ -133,14 +134,18 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           {/* Column 2: Main Article Body */}
           <div className="w-full lg:w-3/5">
             {/* Cover Image inside article */}
-            <div className="mb-12 w-full border-4 border-gray-900 p-2 bg-neutral-950">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img 
-                src={article.coverImage} 
-                alt={article.title}
-                className="w-full h-auto max-h-[600px] object-cover grayscale mix-blend-luminosity"
-              />
-              <div className="text-xs text-gray-500 py-3 font-sans italic text-center uppercase tracking-widest border-t border-gray-900 mt-2">
+            <div className="mb-12 w-full border-4 border-gray-900 bg-neutral-950">
+              <div className="relative w-full h-[300px] md:h-[500px]">
+                <Image
+                  src={article.coverImage}
+                  alt={article.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 70vw"
+                  className="object-cover grayscale mix-blend-luminosity"
+                  priority
+                />
+              </div>
+              <div className="text-xs text-gray-500 py-3 font-sans italic text-center uppercase tracking-widest border-t border-gray-900">
                 Ilustrasi / Arsip - {article.title}
               </div>
             </div>

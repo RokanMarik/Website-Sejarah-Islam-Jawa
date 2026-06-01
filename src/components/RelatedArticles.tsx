@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Article } from "@/lib/data";
 
 interface RelatedArticlesProps {
@@ -42,12 +43,15 @@ export default function RelatedArticles({ currentArticle, allArticles }: Related
             href={`/article/${article.slug}`}
             className="group border border-gray-800 hover:border-yellow-400 transition-colors bg-black overflow-hidden"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={article.coverImage}
-              alt={article.title}
-              className="w-full h-40 object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-            />
+            <div className="relative w-full h-40">
+              <Image
+                src={article.coverImage}
+                alt={article.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+              />
+            </div>
             <div className="p-4">
               <div className="text-xs text-yellow-500 uppercase tracking-wider mb-2">{article.category}</div>
               <h4 className="font-serif font-bold text-white group-hover:text-yellow-400 transition-colors line-clamp-2">

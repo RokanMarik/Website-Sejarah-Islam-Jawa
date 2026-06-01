@@ -1,15 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Article } from "@/lib/data";
 
 export default function GridArticle({ article }: { article: Article }) {
   return (
     <article className="group flex flex-col sm:flex-row gap-6 pb-8 border-b border-gray-900 font-sans">
       <Link href={`/article/${article.slug}`} className="sm:w-2/5 shrink-0 overflow-hidden border border-gray-800 aspect-[4/3] relative">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src={article.coverImage} 
-          alt={article.title} 
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 grayscale mix-blend-luminosity opacity-70 group-hover:grayscale-0 group-hover:opacity-100"
+        <Image
+          src={article.coverImage}
+          alt={article.title}
+          fill
+          sizes="(max-width: 768px) 100vw, 40vw"
+          className="object-cover group-hover:scale-105 transition-transform duration-700 grayscale mix-blend-luminosity opacity-70 group-hover:grayscale-0 group-hover:opacity-100"
         />
         <div className="absolute inset-0 border-2 border-transparent group-hover:border-yellow-400 transition-colors pointer-events-none"></div>
       </Link>

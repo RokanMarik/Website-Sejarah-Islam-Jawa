@@ -1,14 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Article } from "@/lib/data";
 
 export default function HeadlineArticle({ article }: { article: Article }) {
   return (
     <article className="group relative w-full overflow-hidden border-2 border-gray-800 hover:border-yellow-400 transition-colors bg-black h-[400px] md:h-[600px]">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img 
-        src={article.coverImage} 
-        alt={article.title} 
-        className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-70 group-hover:scale-105 transition-all duration-1000 ease-in-out grayscale group-hover:grayscale-0 mix-blend-luminosity" 
+      <Image
+        src={article.coverImage}
+        alt={article.title}
+        fill
+        sizes="(max-width: 768px) 100vw, 80vw"
+        className="object-cover opacity-50 group-hover:opacity-70 group-hover:scale-105 transition-all duration-1000 ease-in-out grayscale group-hover:grayscale-0 mix-blend-luminosity"
+        priority
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
       
