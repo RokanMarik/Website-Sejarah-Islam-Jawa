@@ -90,9 +90,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <span className="text-white">{article.category}</span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-black font-serif leading-[1.1] text-yellow-400 mb-8 tracking-tight drop-shadow-md">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-black font-serif leading-[1.1] text-yellow-400 mb-4 tracking-tight drop-shadow-md">
             {article.title}
           </h1>
+          
+          <p className="text-lg text-gray-400 font-serif mb-4">
+            oleh <span className="text-yellow-400 font-bold">{article.author}</span>
+          </p>
           
           <p className="text-xl text-gray-400 font-serif leading-relaxed max-w-3xl">
             {article.excerpt}
@@ -150,6 +154,23 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
               </button>
             </div>
+
+            {/* References in sidebar for scientific articles */}
+            {article.type === 'scientific' && article.references && article.references.length > 0 && (
+              <div className="mt-8 pt-8 border-t border-gray-800">
+                <div className="text-xs uppercase tracking-widest text-gray-500 mb-4 font-sans">
+                  📚 Referensi ({article.references.length})
+                </div>
+                <ol className="space-y-3 text-xs text-gray-400 font-serif leading-relaxed">
+                  {article.references.map((ref, i) => (
+                    <li key={i} className="pl-4 -indent-4">
+                      <span className="text-yellow-600 mr-1">{i + 1}.</span>
+                      {ref}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
           </div>
 
           {/* Column 2: Main Article Body */}
@@ -175,6 +196,23 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             <div className="w-full">
               <Glossary content={article.content} />
             </div>
+            
+            {/* References section for scientific articles */}
+            {article.type === 'scientific' && article.references && article.references.length > 0 && (
+              <div className="mt-16 pt-8 border-t-2 border-gray-800">
+                <h3 className="font-bold font-serif text-2xl text-yellow-400 mb-6 flex items-center gap-3">
+                  <span>📚</span> Daftar Referensi
+                </h3>
+                <ol className="space-y-4 text-sm text-gray-400 font-serif leading-relaxed">
+                  {article.references.map((ref, i) => (
+                    <li key={i} className="pl-6 -indent-6 pb-4 border-b border-gray-900 last:border-0">
+                      <span className="text-yellow-600 font-bold mr-2">{i + 1}.</span>
+                      {ref}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
             
             <div className="mt-16 pt-8 border-t border-gray-800">
               <h3 className="font-bold font-serif text-2xl text-yellow-400 mb-6">Topik Terkait</h3>
