@@ -16,8 +16,37 @@ const merriweather = Merriweather({
 });
 
 export const metadata: Metadata = {
-  title: "NusaHistoria | Sejarah Islam Jawa",
-  description: "Mempelajari sejarah transisi kekuasaan dari Pengging, Pajang, hingga Kesultanan Mataram Islam.",
+  title: {
+    default: "NusaHistoria | Sejarah Islam Jawa",
+    template: "%s | NusaHistoria",
+  },
+  description: "Ensiklopedia digital sejarah Islam Jawa — menelusuri transisi kekuasaan dari Pengging, Pajang, hingga Kesultanan Mataram Islam.",
+  keywords: ["sejarah islam jawa", "kerajaan mataram", "kerajaan pajang", "kerajaan pengging", "sejarah nusantara"],
+  authors: [{ name: "NusaHistoria" }],
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com",
+    siteName: "NusaHistoria",
+    title: "NusaHistoria | Sejarah Islam Jawa",
+    description: "Ensiklopedia digital sejarah Islam Jawa",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NusaHistoria | Sejarah Islam Jawa",
+    description: "Ensiklopedia digital sejarah Islam Jawa",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({

@@ -1,9 +1,37 @@
 import { getArticles } from "@/lib/data";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
 import Ornament from "@/components/Ornament";
 import Glossary from "@/components/Glossary";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const articles = getArticles();
+  const article = articles.find((a) => a.slug === slug);
+
+  if (!article) {
+    return { title: "Artikel Tidak Ditemukan" };
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com";
+
+  return {
+    title: article.title,
+    description: article.excerpt,
+    keywords: article.tags || [article.category],
+    openGraph: {
+      title: article.title,
+      description: article.excerpt,
+      type: "article",
+      publishedTime: article.date,
+      authors: [article.author],
+      url: `${baseUrl}/article/${article.slug}`,
+      images: article.coverImage ? [{ url: article.coverImage }] : [],
+    },
+  };
+}
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -35,6 +63,23 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           </p>
         </div>
       </header>
+
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: article.title,
+            description: article.excerpt,
+            author: { "@type": "Person", name: article.author },
+            datePublished: article.date,
+            publisher: { "@type": "Organization", name: "NusaHistoria" },
+            mainEntityOfPage: `${process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com"}/article/${article.slug}`,
+          }),
+        }}
+      />
 
       {/* Main 3-Column Layout: Sticky Left, Content Center, Sidebar Right */}
       <div className="max-w-7xl mx-auto px-4 lg:px-8 mt-12 relative z-10">
