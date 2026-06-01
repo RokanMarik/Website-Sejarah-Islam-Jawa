@@ -5,6 +5,7 @@ import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
 import Ornament from "@/components/Ornament";
 import Glossary from "@/components/Glossary";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -45,6 +46,16 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   return (
     <article className="pb-20 bg-transparent min-h-screen relative overflow-hidden text-gray-200">
       
+      {/* Breadcrumbs */}
+      <div className="max-w-7xl mx-auto px-4 lg:px-8 pt-8 relative z-10">
+        <Breadcrumbs
+          items={[
+            { label: article.category },
+            { label: article.title },
+          ]}
+        />
+      </div>
+
       {/* Header Area */}
       <header className="max-w-7xl mx-auto px-4 lg:px-8 pt-16 pb-12 relative z-10 border-b border-gray-800">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">

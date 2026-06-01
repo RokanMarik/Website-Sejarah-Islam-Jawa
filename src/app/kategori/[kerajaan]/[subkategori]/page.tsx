@@ -1,6 +1,7 @@
 import { getArticles } from "@/lib/data";
 import GridArticle from "@/components/GridArticle";
 import Sidebar from "@/components/Sidebar";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default async function CategoryPage({ 
   params 
@@ -26,6 +27,14 @@ export default async function CategoryPage({
     <div className="bg-transparent min-h-screen">
       <div className="max-w-7xl mx-auto px-4 lg:px-8 py-12">
         
+        {/* Breadcrumbs */}
+        <Breadcrumbs
+          items={[
+            { label: formattedKerajaan },
+            { label: formattedSub },
+          ]}
+        />
+
         {/* Header Arsip */}
         <div className="flex flex-col items-center text-center mb-16 border-b border-gray-800 pb-12">
           <div className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-yellow-500 mb-6 font-sans">
