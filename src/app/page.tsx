@@ -62,6 +62,28 @@ export default async function Home() {
 
       {/* Popular Articles */}
       <PopularArticles articles={articles} />
+      
+      {/* JSON-LD ItemList */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: "Artikel Sejarah Islam Jawa",
+            itemListElement: articles.slice(0, 10).map((article, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              item: {
+                "@type": "Article",
+                url: `https://nusahistoria.com/article/${article.slug}`,
+                name: article.title,
+                description: article.excerpt,
+              },
+            })),
+          }),
+        }}
+      />
     </div>
   );
 }

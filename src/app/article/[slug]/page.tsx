@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com";
+  const ogUrl = `${baseUrl}/api/og?title=${encodeURIComponent(article.title)}&category=${encodeURIComponent(article.category)}`;
 
   return {
     title: article.title,
@@ -33,7 +34,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       publishedTime: article.date,
       authors: [article.author],
       url: `${baseUrl}/article/${article.slug}`,
-      images: article.coverImage ? [{ url: article.coverImage }] : [],
+      images: [
+        {
+          url: ogUrl,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.excerpt,
+      images: [ogUrl],
     },
   };
 }
@@ -176,6 +190,28 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             
             {/* Share Buttons */}
             <ShareButtons title={article.title} slug={article.slug} />
+            
+            {/* JSON-LD Structured Data */}
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "Article",
+                  headline: article.title,
+                  description: article.excerpt,
+                  author: { "@type": "Person", name: article.author },
+                  datePublished: article.date,
+                  publisher: {
+                    "@type": "Organization",
+                    name: "NusaHistoria",
+                    logo: { "@type": "ImageObject", url: "https://nusahistoria.com/logo.png" },
+                  },
+                  image: article.coverImage,
+                  keywords: article.tags?.join(", ") || article.category,
+                }),
+              }}
+            />
           </div>
 
           {/* Column 3: Sidebar Right */}
