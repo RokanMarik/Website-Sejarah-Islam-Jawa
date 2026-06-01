@@ -1,5 +1,4 @@
-import fs from 'fs';
-import path from 'path';
+import { getArticles as getDbArticles, saveArticles as saveDbArticles } from "./db";
 
 export interface Article {
   id: string;
@@ -18,23 +17,10 @@ export interface Article {
   tags?: string[];
 }
 
-const dataFilePath = path.join(process.cwd(), 'src', 'lib', 'data.json');
-
 export function getArticles(): Article[] {
-  try {
-    const fileContents = fs.readFileSync(dataFilePath, 'utf8');
-    return JSON.parse(fileContents);
-  } catch (error) {
-    console.error('Error reading data file:', error);
-    return [];
-  }
+  return getDbArticles() as Article[];
 }
 
 export function saveArticles(articles: Article[]) {
-  try {
-    fs.writeFileSync(dataFilePath, JSON.stringify(articles, null, 2), 'utf8');
-  } catch (error) {
-    console.error('Error saving data file:', error);
-    throw new Error('Failed to save data');
-  }
+  saveDbArticles(articles);
 }
