@@ -28,7 +28,9 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
     date: '20 Mei 2026',
     readTime: '5 min read',
     authorInstagram: '',
-    isHeadline: false
+    isHeadline: false,
+    type: 'regular',
+    references: [],
   };
 
   const handleEdit = (article: Article) => {
@@ -161,6 +163,34 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
             </div>
 
             <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">Tipe Artikel</label>
+              <div className="flex gap-4">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="articleType"
+                    value="regular"
+                    checked={editingArticle.type === 'regular'}
+                    onChange={e => setEditingArticle({...editingArticle, type: e.target.value as 'regular' | 'scientific'})}
+                    className="w-4 h-4 text-blue-600"
+                  />
+                  <span className="text-sm text-gray-700">Biasa</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="articleType"
+                    value="scientific"
+                    checked={editingArticle.type === 'scientific'}
+                    onChange={e => setEditingArticle({...editingArticle, type: e.target.value as 'regular' | 'scientific'})}
+                    className="w-4 h-4 text-blue-600"
+                  />
+                  <span className="text-sm text-gray-700">Ilmiah</span>
+                </label>
+              </div>
+            </div>
+
+            <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">Sub-Kategori (Opsional)</label>
               <select 
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
@@ -251,6 +281,23 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
                 }}
               />
             </div>
+
+            {editingArticle.type === 'scientific' && (
+              <div className="space-y-2 md:col-span-2">
+                <label className="block text-sm font-semibold text-gray-700">Daftar Referensi (satu per baris)</label>
+                <textarea
+                  rows={5}
+                  placeholder={`1. Kuntowijoyo. (2002). Pengantar Ilmu Sejarah. Yogyakarta: Penerbit Ombak.\n2. Ricklefs, M.C. (2005). Sejarah Indonesia Modern. Jakarta: UGM Press.`}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none font-mono text-sm"
+                  value={editingArticle.references?.join('\n') || ''}
+                  onChange={e => {
+                    const refs = e.target.value.split('\n').map(r => r.trim()).filter(r => r);
+                    setEditingArticle({...editingArticle, references: refs});
+                  }}
+                />
+                <p className="text-xs text-gray-500">Satu referensi per baris. Format: Author. (Tahun). Judul. Publisher.</p>
+              </div>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -329,6 +376,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
               <th className="p-4 font-semibold">Judul</th>
               <th className="p-4 font-semibold hidden md:table-cell">Kategori</th>
               <th className="p-4 font-semibold hidden lg:table-cell">Tanggal</th>
+              <th className="p-4 font-semibold hidden lg:table-cell">Tipe</th>
               <th className="p-4 font-semibold text-center">Status</th>
               <th className="p-4 font-semibold text-right">Aksi</th>
             </tr>
@@ -346,6 +394,11 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
                   </span>
                 </td>
                 <td className="p-4 text-sm text-gray-600 hidden lg:table-cell">{article.date}</td>
+                <td className="p-4 text-center hidden lg:table-cell">
+                  {article.type === 'scientific' && (
+                    <span className="inline-block px-2 py-1 bg-yellow-100 text-yellow-700 text-[10px] font-bold uppercase rounded-sm">Ilmiah</span>
+                  )}
+                </td>
                 <td className="p-4 text-center">
                   {article.isHeadline && (
                     <span className="inline-block px-2 py-1 bg-red-100 text-red-700 text-[10px] font-bold uppercase rounded-sm">Headline</span>
