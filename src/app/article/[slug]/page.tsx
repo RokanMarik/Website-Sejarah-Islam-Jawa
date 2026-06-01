@@ -12,6 +12,7 @@ import BookmarkButton from "@/components/BookmarkButton";
 import ReadingProgress from "@/components/ReadingProgress";
 import ReadingTracker from "@/components/ReadingTracker";
 import { ArticleJsonLd, BreadcrumbListJsonLd } from "@/components/JsonLd";
+import GiscusComments from "@/components/GiscusComments";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -194,6 +195,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               <BookmarkButton article={article} />
               <ShareButtons title={article.title} slug={article.slug} />
             </div>
+            
+            {/* Comments Section */}
+            <GiscusComments
+              repo="RokanMarik/Website-Sejarah-Islam-Jawa"
+              repoId="PLACEHOLDER"
+              category="Comments"
+              categoryId="PLACEHOLDER"
+            />
           </div>
 
           {/* Column 3: Sidebar Right */}

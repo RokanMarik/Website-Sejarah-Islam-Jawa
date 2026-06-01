@@ -1,10 +1,10 @@
 import { getArticles } from "@/lib/data";
 import HeadlineArticle from "@/components/HeadlineArticle";
-import GridArticle from "@/components/GridArticle";
 import Sidebar from "@/components/Sidebar";
 import PopularArticles from "@/components/PopularArticles";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/JsonLd";
 import { InteractiveModules } from "@/components/InteractiveModules";
+import ArticleList from "@/components/ArticleList";
 import { Article } from "@/lib/data";
 
 export const revalidate = 3600;
@@ -37,13 +37,7 @@ export default async function Home() {
             
             <InteractiveModules />
 
-            <div className="flex flex-col lg:flex-row gap-12 mt-8">
-              <div className="w-full lg:w-2/3 flex flex-col gap-8">
-                {gridArticles.map((article: Article) => (
-                  <GridArticle key={article.id} article={article} />
-                ))}
-              </div>
-            </div>
+            <ArticleList articles={gridArticles} />
           </div>
 
           <div className="w-full lg:w-1/3">
