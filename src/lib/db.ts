@@ -49,6 +49,45 @@ async function ensureDbInitialized() {
           definition TEXT NOT NULL
         )
       `);
+
+      // Seed data from data.json if articles table is empty
+      const countResult = await database.execute("SELECT COUNT(*) as count FROM articles");
+      const count = (countResult.rows[0] as any).count;
+      if (count === 0) {
+        try {
+          const dataJson = await import("./data.json");
+          const articles = dataJson.default || dataJson;
+          for (const article of articles) {
+            await database.execute({
+              sql: `INSERT OR REPLACE INTO articles 
+                (id, slug, title, excerpt, content, coverImage, category, author, readTime, date, isHeadline, authorInstagram, subcategory, tags, type, "references")
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+              args: [
+                article.id,
+                article.slug,
+                article.title,
+                article.excerpt || '',
+                article.content || '',
+                article.coverImage || '',
+                article.category || '',
+                article.author || '',
+                article.readTime || '',
+                article.date || '',
+                article.isHeadline ? 1 : 0,
+                article.authorInstagram || '',
+                article.subcategory || '',
+                JSON.stringify(article.tags || []),
+                (article as any).type || 'regular',
+                JSON.stringify((article as any).references || []),
+              ],
+            });
+          }
+          console.log(`Seeded ${articles.length} articles from data.json`);
+        } catch (e) {
+          console.error('Failed to seed articles from data.json:', e);
+        }
+      }
+
       dbInitialized = true;
     })();
   }
