@@ -38,6 +38,7 @@ export async function POST(request: NextRequest) {
   }
 
   if (username === validUser && password === validPass) {
+    console.log('[auth/login] Login successful for user:', username);
     const cookieStore = await cookies();
     cookieStore.set("admin-auth", "true", {
       httpOnly: true,
@@ -50,5 +51,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true, csrfToken });
   }
 
+  console.log('[auth/login] Login failed for user:', username);
   return NextResponse.json({ success: false, error: "Invalid credentials" }, { status: 401 });
 }

@@ -8,19 +8,26 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
+    let cancelled = false;
     const checkAuth = async () => {
       try {
-        const res = await fetch("/api/auth/verify");
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 5000);
+        
+        const res = await fetch("/api/auth/verify", { signal: controller.signal });
+        clearTimeout(timeout);
+        
         if (!res.ok) {
-          router.push("/admin/login");
+          if (!cancelled) router.push("/admin/login");
         } else {
-          setIsAuthenticated(true);
+          if (!cancelled) setIsAuthenticated(true);
         }
       } catch {
-        router.push("/admin/login");
+        if (!cancelled) router.push("/admin/login");
       }
     };
     checkAuth();
+    return () => { cancelled = true; };
   }, [router]);
 
   if (isAuthenticated === null) {
