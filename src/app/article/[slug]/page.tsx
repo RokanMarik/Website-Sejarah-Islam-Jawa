@@ -3,7 +3,7 @@ import { getArticles } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
-import Ornament from "@/components/Ornament";
+import _Ornament from "@/components/Ornament";
 import Glossary from "@/components/Glossary";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -61,6 +61,25 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
   return (
     <article className="pb-20 bg-transparent min-h-screen relative overflow-hidden text-gray-200">
+      
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: article.title,
+            description: article.excerpt,
+            image: article.coverImage || 'https://nusahistoria.vercel.app/og-image.svg',
+            datePublished: article.date,
+            dateModified: article.date,
+            author: { '@type': 'Person', name: article.author, url: article.authorInstagram || undefined },
+            publisher: { '@type': 'Organization', name: 'NusaHistoria', logo: { '@type': 'ImageObject', url: 'https://nusahistoria.vercel.app/og-image.svg' } },
+            mainEntityOfPage: { '@type': 'WebPage', '@id': `https://nusahistoria.vercel.app/article/${article.slug}` },
+          }),
+        }}
+      />
       
       {/* Header Area */}
       <header className="max-w-7xl mx-auto px-4 lg:px-8 pt-16 pb-12 relative z-10 border-b border-gray-800">
