@@ -8,6 +8,8 @@ import Ornament from "@/components/Ornament";
 import Glossary from "@/components/Glossary";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RelatedArticles from "@/components/RelatedArticles";
+import ShareButtons from "@/components/ShareButtons";
+import ReadingProgress from "@/components/ReadingProgress";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -48,6 +50,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   return (
     <article className="pb-20 bg-transparent min-h-screen relative overflow-hidden text-gray-200">
       
+      {/* Reading Progress Bar */}
+      <ReadingProgress />
+
       {/* Breadcrumbs */}
       <div className="max-w-7xl mx-auto px-4 lg:px-8 pt-8 relative z-10">
         <Breadcrumbs
@@ -168,6 +173,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             
             {/* Related Articles */}
             <RelatedArticles currentArticle={article} allArticles={articles} />
+            
+            {/* Share Buttons */}
+            <ShareButtons title={article.title} slug={article.slug} />
           </div>
 
           {/* Column 3: Sidebar Right */}
