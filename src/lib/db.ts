@@ -1,5 +1,4 @@
 import { createClient, Client } from "@libsql/client";
-import path from "path";
 
 const dbUrl = process.env.DATABASE_URL || "file:local.db";
 
@@ -67,31 +66,29 @@ export async function getArticles() {
 export async function saveArticles(articles: any[]) {
   const database = getDb();
   
-  await database.transaction(async (tx) => {
-    for (const article of articles) {
-      await tx.execute({
-        sql: `INSERT OR REPLACE INTO articles 
-          (id, slug, title, excerpt, content, coverImage, category, author, readTime, date, isHeadline, authorInstagram, subcategory, tags)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        args: [
-          article.id,
-          article.slug,
-          article.title,
-          article.excerpt || '',
-          article.content || '',
-          article.coverImage || '',
-          article.category || '',
-          article.author || '',
-          article.readTime || '',
-          article.date || '',
-          article.isHeadline ? 1 : 0,
-          article.authorInstagram || '',
-          article.subcategory || '',
-          JSON.stringify(article.tags || []),
-        ],
-      });
-    }
-  });
+  const statements = articles.map(article => ({
+    sql: `INSERT OR REPLACE INTO articles 
+      (id, slug, title, excerpt, content, coverImage, category, author, readTime, date, isHeadline, authorInstagram, subcategory, tags)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    args: [
+      article.id,
+      article.slug,
+      article.title,
+      article.excerpt || '',
+      article.content || '',
+      article.coverImage || '',
+      article.category || '',
+      article.author || '',
+      article.readTime || '',
+      article.date || '',
+      article.isHeadline ? 1 : 0,
+      article.authorInstagram || '',
+      article.subcategory || '',
+      JSON.stringify(article.tags || []),
+    ],
+  }));
+
+  await database.batch(statements);
 }
 
 export async function getArticleBySlug(slug: string) {

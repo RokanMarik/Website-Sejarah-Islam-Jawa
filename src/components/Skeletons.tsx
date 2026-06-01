@@ -15,3 +15,17 @@ export function TimelineSkeleton() {
     </div>
   );
 }
+
+export function SkeletonArticle() {
+  return (
+    <div className="space-y-8">
+      <div className="h-8 bg-neutral-900 animate-pulse rounded w-3/4" />
+      <div className="h-64 bg-neutral-900 animate-pulse rounded" />
+      <div className="space-y-3">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="h-4 bg-neutral-900 animate-pulse rounded" style={{ width: `${80 - i * 10}%` }} />
+        ))}
+      </div>
+    </div>
+  );
+}

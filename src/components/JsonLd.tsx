@@ -1,10 +1,9 @@
-import type { Article, Organization, BreadcrumbList, WebSite } from "schema-dts";
 
-interface JsonLdProps<T> {
-  data: T;
+interface JsonLdProps {
+  data: Record<string, unknown>;
 }
 
-export function JsonLd<T extends Record<string, unknown>>({ data }: JsonLdProps<T>) {
+export function JsonLd({ data }: JsonLdProps) {
   return (
     <script
       type="application/ld+json"
@@ -28,7 +27,7 @@ export function ArticleJsonLd({
   author: string;
   url: string;
 }) {
-  const data: Article = {
+  const data = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: title,
@@ -49,7 +48,7 @@ export function ArticleJsonLd({
 
 export function OrganizationJsonLd() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com";
-  const data: Organization = {
+  const data = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "NusaHistoria",
@@ -65,7 +64,7 @@ export function BreadcrumbListJsonLd({
 }: {
   items: { name: string; url: string }[];
 }) {
-  const data: BreadcrumbList = {
+  const data = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: items.map((item, index) => ({
@@ -81,7 +80,7 @@ export function BreadcrumbListJsonLd({
 
 export function WebSiteJsonLd() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nusahistoria.com";
-  const data: WebSite = {
+  const data = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "NusaHistoria",

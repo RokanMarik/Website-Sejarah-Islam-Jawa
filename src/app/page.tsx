@@ -1,28 +1,18 @@
 import { getArticles } from "@/lib/data";
-import dynamic from "next/dynamic";
 import HeadlineArticle from "@/components/HeadlineArticle";
 import GridArticle from "@/components/GridArticle";
 import Sidebar from "@/components/Sidebar";
 import PopularArticles from "@/components/PopularArticles";
-import { MapSkeleton, TimelineSkeleton } from "@/components/Skeletons";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/JsonLd";
-
-const JavaMap = dynamic(() => import("@/components/JavaMap"), {
-  loading: () => <MapSkeleton />,
-  ssr: false,
-});
-
-const Timeline = dynamic(() => import("@/components/Timeline"), {
-  loading: () => <TimelineSkeleton />,
-  ssr: false,
-});
+import { InteractiveModules } from "@/components/InteractiveModules";
+import { Article } from "@/lib/data";
 
 export const revalidate = 3600;
 
 export default async function Home() {
   const articles = await getArticles();
-  const headlineArticle = articles.find(a => a.isHeadline) || articles[0];
-  const gridArticles = articles.filter(a => a.id !== headlineArticle.id);
+  const headlineArticle: Article | undefined = articles.find(a => a.isHeadline) || articles[0];
+  const gridArticles = articles.filter(a => a.id !== headlineArticle?.id);
 
   return (
     <div className="bg-transparent pb-20 relative overflow-hidden">
@@ -45,17 +35,11 @@ export default async function Home() {
               <div className="ml-4 h-[1px] flex-grow bg-gray-800"></div>
             </div>
             
-            <div className="w-full">
-              <JavaMap />
-            </div>
-            
-            <div className="w-full">
-              <Timeline />
-            </div>
+            <InteractiveModules />
 
             <div className="flex flex-col lg:flex-row gap-12 mt-8">
               <div className="w-full lg:w-2/3 flex flex-col gap-8">
-                {gridArticles.map(article => (
+                {gridArticles.map((article: Article) => (
                   <GridArticle key={article.id} article={article} />
                 ))}
               </div>
@@ -77,7 +61,7 @@ export default async function Home() {
             "@context": "https://schema.org",
             "@type": "ItemList",
             name: "Artikel Sejarah Islam Jawa",
-            itemListElement: articles.slice(0, 10).map((article, index) => ({
+            itemListElement: articles.slice(0, 10).map((article: Article, index: number) => ({
               "@type": "ListItem",
               position: index + 1,
               item: {
