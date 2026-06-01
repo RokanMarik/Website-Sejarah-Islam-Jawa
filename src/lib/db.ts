@@ -66,7 +66,7 @@ export async function initDb() {
       subcategory TEXT,
       tags TEXT,
       type TEXT DEFAULT 'regular',
-      references TEXT
+      "references" TEXT
     )
   `);
 
@@ -114,7 +114,7 @@ export async function saveArticles(articles: any[]) {
   
   const statements = articles.map(article => ({
     sql: `INSERT OR REPLACE INTO articles 
-      (id, slug, title, excerpt, content, coverImage, category, author, readTime, date, isHeadline, authorInstagram, subcategory, tags, type, references)
+      (id, slug, title, excerpt, content, coverImage, category, author, readTime, date, isHeadline, authorInstagram, subcategory, tags, type, "references")
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     args: [
       article.id,
