@@ -5,7 +5,9 @@ import PopularArticles from "@/components/PopularArticles";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/JsonLd";
 import { InteractiveModules } from "@/components/InteractiveModules";
 import ArticleList from "@/components/ArticleList";
+import ScientificArticleCard from "@/components/ScientificArticleCard";
 import { Article } from "@/lib/data";
+import Link from "next/link";
 
 export const revalidate = 3600;
 
@@ -47,6 +49,28 @@ export default async function Home() {
       </div>
 
       <PopularArticles articles={articles} />
+
+      {/* Bacaan Ilmiah Section */}
+      {(() => {
+        const scientificArticles = articles.filter(a => a.type === 'scientific').slice(0, 3);
+        if (scientificArticles.length === 0) return null;
+
+        return (
+          <div className="max-w-7xl mx-auto px-4 lg:px-8 mt-20 relative z-10">
+            <div className="border-b border-gray-800 pb-3 mb-8 flex items-center justify-between">
+              <h2 className="text-2xl font-bold uppercase tracking-widest text-white font-serif">📖 Bacaan Ilmiah</h2>
+              <Link href="/ilmiah" className="text-sm text-yellow-400 hover:text-yellow-300 transition-colors font-sans uppercase tracking-widest">
+                Lihat Semua →
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {scientificArticles.map(article => (
+                <ScientificArticleCard key={article.id} article={article} />
+              ))}
+            </div>
+          </div>
+        );
+      })()}
       
       <script
         type="application/ld+json"
