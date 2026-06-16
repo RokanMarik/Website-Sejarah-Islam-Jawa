@@ -4,10 +4,15 @@ interface JsonLdProps {
 }
 
 export function JsonLd({ data }: JsonLdProps) {
+  // HTML-escape the JSON string to prevent XSS via </script> breakout.
+  // If any value in the data contains `</script>` or `<`, it would close
+  // the script tag early and inject arbitrary HTML. Replacing `<` with
+  // `\u003c` is safe because JSON doesn't use `<` for any structural purpose.
+  const safeJson = JSON.stringify(data).replace(/</g, '\\u003c');
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: safeJson }}
     />
   );
 }

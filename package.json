@@ -7,16 +7,21 @@
     "build": "npx tsx scripts/migrate-articles.ts && next build",
     "start": "next start",
     "lint": "eslint",
-    "migrate": "npx tsx scripts/migrate.ts"
+    "migrate": "npx tsx scripts/migrate.ts",
+    "doctor": "npx react-doctor@latest"
   },
   "dependencies": {
     "@libsql/client": "^0.17.3",
+    "@types/leaflet": "^1.9.21",
+    "dompurify": "^3.4.8",
     "framer-motion": "^12.40.0",
     "jodit-react": "^5.3.21",
+    "leaflet": "^1.9.4",
     "next": "16.2.6",
     "next-themes": "^0.4.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "react-leaflet": "^5.0.0",
     "react-player": "^3.4.0"
   },
   "devDependencies": {

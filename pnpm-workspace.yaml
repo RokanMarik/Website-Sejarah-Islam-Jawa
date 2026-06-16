@@ -1,0 +1,12 @@
+allowBuilds:
+  sharp: set this to true or false
+  unrs-resolver: set this to true or false
+
+# Supply-chain hardening (react-doctor/require-pnpm-hardening)
+# Wait 7 days before allowing newly published versions — gives time for
+# malware to be caught and unpublished before it reaches your install.
+minimumReleaseAge: 10080
+# Block subdependencies from git:/file:/tarball URLs that bypass the registry.
+blockExoticSubdeps: true
+# Refuse packages whose provenance/signature trust weakens between resolutions.
+trustPolicy: no-downgrade

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import DOMPurify from 'dompurify';
 import { dictionary } from '../lib/dictionary';
 
 export default function Glossary({ content }: { content: string }) {
@@ -22,6 +23,10 @@ export default function Glossary({ content }: { content: string }) {
       const regex = new RegExp(`\\b(${term})\\b(?![^<]*>)`, 'gi');
       html = html.replace(regex, `<span class="glossary-term cursor-help border-b border-dashed border-yellow-500 text-yellow-500 font-bold hover:bg-yellow-500/10 transition-colors" data-term="${term}">$1</span>`);
     });
+    // Sanitize the final HTML to prevent XSS — the content prop could
+    // contain attacker-controlled markup, and DOMPurify strips dangerous
+    // elements/attributes while preserving safe HTML structure.
+    html = DOMPurify.sanitize(html);
     return { __html: html };
   };
 

@@ -2,7 +2,7 @@ import { getArticles } from "@/lib/data";
 import HeadlineArticle from "@/components/HeadlineArticle";
 import Sidebar from "@/components/Sidebar";
 import PopularArticles from "@/components/PopularArticles";
-import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/JsonLd";
+import { OrganizationJsonLd, WebSiteJsonLd, JsonLd } from "@/components/JsonLd";
 import { InteractiveModules } from "@/components/InteractiveModules";
 import ArticleList from "@/components/ArticleList";
 import ScientificArticleCard from "@/components/ScientificArticleCard";
@@ -72,26 +72,21 @@ export default async function Home() {
         );
       })()}
       
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            name: "Artikel Sejarah Islam Jawa",
-            itemListElement: articles.slice(0, 10).map((article: Article, index: number) => ({
-              "@type": "ListItem",
-              position: index + 1,
-              item: {
-                "@type": "Article",
-                url: `https://nusahistoria.com/article/${article.slug}`,
-                name: article.title,
-                description: article.excerpt,
-              },
-            })),
-          }),
-        }}
-      />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "Artikel Sejarah Islam Jawa",
+        itemListElement: articles.slice(0, 10).map((article: Article, index: number) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "Article",
+            url: `https://nusahistoria.com/article/${article.slug}`,
+            name: article.title,
+            description: article.excerpt,
+          },
+        })),
+      }} />
     </div>
   );
 }
