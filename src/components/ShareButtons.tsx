@@ -66,6 +66,7 @@ export default function ShareButtons({ title, slug }: ShareButtonsProps) {
           </a>
         ))}
         <button
+          type="button"
           onClick={handleCopy}
           className="flex items-center gap-2 px-4 py-2 border border-gray-700 rounded-full text-gray-400 hover:bg-yellow-500 hover:border-yellow-500 hover:text-black transition-all"
           aria-label="Copy link"

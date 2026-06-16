@@ -110,6 +110,7 @@ export default function Timeline() {
           {events.length > 5 && (
             <div className="mt-16 flex justify-center">
               <button 
+                type="button"
                 onClick={() => setShowAll(!showAll)}
                 className="px-8 py-3 bg-neutral-900 border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-bold text-sm uppercase tracking-widest rounded-full transition-all duration-300 shadow-[0_0_15px_rgba(234,179,8,0.2)] hover:shadow-[0_0_20px_rgba(234,179,8,0.6)]"
               >

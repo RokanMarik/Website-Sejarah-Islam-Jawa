@@ -90,7 +90,7 @@ export default function SearchBar() {
           aria-label="Search articles"
         />
         {query && (
-          <button onClick={() => setQuery("")} className="text-gray-500 hover:text-white">
+          <button type="button" onClick={() => setQuery("")} className="text-gray-500 hover:text-white">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -115,6 +115,7 @@ export default function SearchBar() {
             ))}
             {results.length > 5 && (
               <button
+                type="button"
                 onClick={() => {
                   router.push(`/pencarian?q=${encodeURIComponent(query)}`);
                   setQuery("");

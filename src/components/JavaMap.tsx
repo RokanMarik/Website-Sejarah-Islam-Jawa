@@ -129,6 +129,7 @@ export default function JavaMap() {
         <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-8 relative z-50">
           {eras.map((era, idx) => (
             <button
+              type="button"
               key={era.year}
               onClick={() => setActiveEraIndex(idx)}
               className={`px-5 py-2 rounded-sm font-bold text-sm tracking-widest transition-all duration-300 border-b-2 ${
@@ -299,18 +300,21 @@ export default function JavaMap() {
           {/* Zoom Controls */}
           <div className="absolute bottom-4 right-4 flex flex-col gap-2">
             <button
+              type="button"
               onClick={() => setScale(s => Math.min(s + 0.25, 3))}
               className="w-8 h-8 bg-black/80 border border-yellow-400 text-yellow-400 rounded flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-colors text-lg font-bold"
             >
               +
             </button>
             <button
+              type="button"
               onClick={() => setScale(s => Math.max(s - 0.25, 0.5))}
               className="w-8 h-8 bg-black/80 border border-yellow-400 text-yellow-400 rounded flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-colors text-lg font-bold"
             >
               &minus;
             </button>
             <button
+              type="button"
               onClick={() => { setScale(1); setPosition({ x: 0, y: 0 }); }}
               className="w-8 h-8 bg-black/80 border border-yellow-400 text-yellow-400 rounded flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-colors text-xs"
             >

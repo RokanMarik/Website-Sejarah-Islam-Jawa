@@ -36,7 +36,7 @@ export default function BookmarksPage() {
                     {bookmark.title}
                   </Link>
                   <p className="text-sm text-gray-400 mt-1">{bookmark.category}</p>
-                  <button onClick={() => handleRemove(bookmark.id)} className="text-xs text-red-400 hover:text-red-300 mt-2">
+                  <button type="button" onClick={() => handleRemove(bookmark.id)} className="text-xs text-red-400 hover:text-red-300 mt-2">
                     Hapus
                   </button>
                 </div>

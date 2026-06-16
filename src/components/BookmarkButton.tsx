@@ -29,6 +29,7 @@ export default function BookmarkButton({ article }: { article: Article }) {
 
   return (
     <button
+      type="button"
       onClick={toggleBookmark}
       className={`p-2 rounded-full transition-colors ${
         bookmarked ? "text-yellow-400 hover:text-yellow-300" : "text-gray-400 hover:text-white"

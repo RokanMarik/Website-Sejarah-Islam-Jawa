@@ -49,7 +49,7 @@ export default function Navigation() {
               onMouseEnter={() => setActiveDropdown("kerajaan")}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <button className="hover:text-yellow-400 transition-colors flex items-center gap-1 uppercase tracking-widest text-yellow-400 border-b-2 border-yellow-400 h-full">
+              <button type="button" className="hover:text-yellow-400 transition-colors flex items-center gap-1 uppercase tracking-widest text-yellow-400 border-b-2 border-yellow-400 h-full">
                 Kerajaan Islam Pedalaman Jawa
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
               </button>
@@ -88,6 +88,7 @@ export default function Navigation() {
           
           <div className="flex md:hidden items-center">
             <button 
+              type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Menu" 
               className="p-2 text-yellow-400"
@@ -113,6 +114,7 @@ function SearchTrigger() {
   return (
     <>
       <button
+        type="button"
         id="search-trigger"
         onClick={() => setOpen(true)}
         className="hover:text-yellow-400 transition-colors h-full flex items-center gap-2 text-gray-400"

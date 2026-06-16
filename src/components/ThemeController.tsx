@@ -28,6 +28,7 @@ export default function ThemeController() {
 
   return (
     <button 
+      type="button"
       onClick={toggleTheme}
       className="flex items-center gap-2 hover:text-yellow-400 transition-colors h-full px-4 border-l border-gray-800 ml-4 group"
       title="Ubah Mode Naskah Kuno"

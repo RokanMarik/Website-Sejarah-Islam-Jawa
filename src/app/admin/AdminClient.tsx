@@ -127,7 +127,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
         <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
           <h2 className="text-2xl font-bold text-gray-900">{editingArticle.id ? 'Edit Artikel' : 'Tulis Artikel Baru'}</h2>
-          <button onClick={handleCancel} className="text-gray-500 hover:text-gray-800 transition-colors">Batal</button>
+          <button type="button" onClick={handleCancel} className="text-gray-500 hover:text-gray-800 transition-colors">Batal</button>
         </div>
         
         <form onSubmit={handleSave} className="space-y-6">
@@ -361,6 +361,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold text-gray-800">Daftar Artikel</h2>
         <button 
+          type="button"
           onClick={handleCreateNew}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors font-medium text-sm flex items-center gap-2"
         >
@@ -407,6 +408,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
                 <td className="p-4 text-right">
                   <div className="flex items-center justify-end gap-2">
                     <button 
+                      type="button"
                       onClick={() => handleEdit(article)}
                       className="p-2 text-blue-600 hover:bg-blue-50 rounded transition-colors"
                       title="Edit"
@@ -414,6 +416,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                     </button>
                     <button 
+                      type="button"
                       onClick={() => handleDelete(article.id)}
                       className="p-2 text-red-600 hover:bg-red-50 rounded transition-colors"
                       title="Hapus"

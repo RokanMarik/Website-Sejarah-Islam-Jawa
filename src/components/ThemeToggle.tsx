@@ -51,6 +51,7 @@ export default function ThemeToggle() {
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
       className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-700 hover:border-yellow-400 transition-colors text-sm"
       title={themeLabels[theme]}

@@ -179,6 +179,7 @@ export default function QuizClient({ questions, leaderboard }: { questions: Ques
         <div className="mt-6 text-center space-y-3">
           <Link href="/" className="text-xs text-gray-500 hover:text-yellow-500 uppercase tracking-widest transition-colors block">← Kembali ke Beranda</Link>
           <button
+            type="button"
             onClick={() => {
               const history = JSON.parse(localStorage.getItem('quiz-history') || '[]');
               alert(history.length > 0
@@ -239,6 +240,7 @@ export default function QuizClient({ questions, leaderboard }: { questions: Ques
 
             return (
               <button 
+                type="button"
                 key={index}
                 onClick={() => handleAnswer(index)}
                 disabled={showFeedback}
@@ -327,6 +329,7 @@ export default function QuizClient({ questions, leaderboard }: { questions: Ques
       {/* Share Buttons */}
       <div className="flex flex-wrap gap-3 justify-center mb-8">
         <button
+          type="button"
           onClick={() => {
             const text = `Skor kuis NusaHistoria: ${percentage}% (${score}/${filteredQuestions.length}) - ${message} Coba juga!`;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
@@ -337,6 +340,7 @@ export default function QuizClient({ questions, leaderboard }: { questions: Ques
           WhatsApp
         </button>
         <button
+          type="button"
           onClick={() => {
             const text = `Skor kuis NusaHistoria: ${percentage}% (${score}/${filteredQuestions.length}) - ${message}`;
             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
@@ -350,6 +354,7 @@ export default function QuizClient({ questions, leaderboard }: { questions: Ques
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <button 
+          type="button"
           onClick={() => {
             setScore(0);
             setCurrentQuestionIndex(0);

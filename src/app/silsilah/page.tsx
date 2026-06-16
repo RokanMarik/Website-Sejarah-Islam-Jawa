@@ -218,12 +218,14 @@ export default function SilsilahPage() {
         <div className="flex justify-center mb-12">
           <div className="bg-neutral-900 p-1 rounded-lg inline-flex border border-gray-800">
             <button 
+              type="button"
               onClick={() => setActiveTab("babad")}
               className={`px-6 py-3 rounded-md font-bold text-sm uppercase tracking-widest transition-all ${activeTab === 'babad' ? 'bg-yellow-500 text-black shadow-lg' : 'text-gray-400 hover:text-white'}`}
             >
               Versi Babad (Legenda)
             </button>
             <button 
+              type="button"
               onClick={() => setActiveTab("historis")}
               className={`px-6 py-3 rounded-md font-bold text-sm uppercase tracking-widest transition-all ${activeTab === 'historis' ? 'bg-yellow-500 text-black shadow-lg' : 'text-gray-400 hover:text-white'}`}
             >

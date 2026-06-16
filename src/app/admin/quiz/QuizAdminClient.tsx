@@ -81,6 +81,7 @@ export default function QuizAdminClient({ initialQuestions }: { initialQuestions
         <div className="flex justify-between items-center mb-6">
           <h3 className="font-bold text-lg">Daftar Soal</h3>
           <button 
+            type="button"
             onClick={handleAddNew}
             className="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition"
           >
