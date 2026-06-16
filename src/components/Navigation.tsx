@@ -6,27 +6,18 @@ import ThemeToggle from "./ThemeToggle";
 import MobileMenu from "./MobileMenu";
 import SearchModal from "./SearchModal";
 
+const MENUS = [
+  { title: "Pengging", submenus: ["Perkembangan", "Konflik", "Tokoh", "Warisan"] },
+  { title: "Pajang", submenus: ["Perkembangan", "Konflik", "Tokoh", "Warisan"] },
+  { title: "Mataram", submenus: ["Perkembangan", "Konflik", "Tokoh", "Warisan"] },
+];
+
 export default function Navigation() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const menus = [
-    {
-      title: "Pengging",
-      submenus: ["Perkembangan", "Konflik", "Tokoh", "Warisan"]
-    },
-    {
-      title: "Pajang",
-      submenus: ["Perkembangan", "Konflik", "Tokoh", "Warisan"]
-    },
-    {
-      title: "Mataram",
-      submenus: ["Perkembangan", "Konflik", "Tokoh", "Warisan"]
-    }
-  ];
-
   return (
-    <header className="sticky top-0 z-50 w-full bg-black border-b-2 border-yellow-400 shadow-md font-sans" role="banner">
+    <header className="sticky top-0 z-50 w-full bg-black border-b-2 border-yellow-400 shadow-md font-sans">
       {/* Top utility bar */}
       <div className="bg-yellow-400 text-black text-xs py-1.5 px-4 hidden md:block border-b border-yellow-500">
         <div className="max-w-7xl mx-auto flex justify-between items-center font-bold tracking-widest uppercase">
@@ -49,7 +40,7 @@ export default function Navigation() {
               onMouseEnter={() => setActiveDropdown("kerajaan")}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <button className="hover:text-yellow-400 transition-colors flex items-center gap-1 uppercase tracking-widest text-yellow-400 border-b-2 border-yellow-400 h-full">
+              <button type="button" className="hover:text-yellow-400 transition-colors flex items-center gap-1 uppercase tracking-widest text-yellow-400 border-b-2 border-yellow-400 h-full">
                 Kerajaan Islam Pedalaman Jawa
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
               </button>
@@ -57,11 +48,11 @@ export default function Navigation() {
               {/* Mega Menu Dropdown */}
               {activeDropdown === "kerajaan" && (
                 <div className="absolute top-20 left-0 w-[420px] bg-black border-2 border-yellow-400 p-6 grid grid-cols-3 gap-6 shadow-2xl z-50 mega-menu">
-                  {menus.map((menu) => (
+                  {MENUS.map((menu) => (
                     <div key={menu.title}>
                       <h4 className="text-yellow-400 font-bold mb-4 pb-2 border-b border-gray-800 text-lg font-serif">{menu.title}</h4>
                       <ul className="space-y-3">
-                        {menu.submenus.map(sub => (
+                        {menu.subMENUS.map(sub => (
                           <li key={sub}>
                             <Link href={`/kategori/${menu.title.toLowerCase()}/${sub.toLowerCase()}`} className="text-gray-300 hover:text-white hover:underline text-xs tracking-wider transition-all">
                               {sub}
@@ -87,7 +78,7 @@ export default function Navigation() {
           </nav>
           
           <div className="flex md:hidden items-center">
-            <button 
+            <button type="button" 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Menu" 
               className="p-2 text-yellow-400"
@@ -112,7 +103,7 @@ function SearchTrigger() {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <button
+      <button type="button"
         id="search-trigger"
         onClick={() => setOpen(true)}
         className="hover:text-yellow-400 transition-colors h-full flex items-center gap-2 text-gray-400"

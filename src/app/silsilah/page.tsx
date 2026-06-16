@@ -142,8 +142,8 @@ const historisTree: TreeNode[] = [
 const TreeRenderer = ({ data, level = 0 }: { data: TreeNode[], level?: number }) => {
   return (
     <div className="relative">
-      {data.map((node, i) => (
-        <div key={i} className={`relative ${level > 0 ? 'ml-6 md:ml-12 border-l-2 border-yellow-700/50 pl-6 md:pl-10 pb-6' : 'pb-8'}`}>
+      {data.map((node) => (
+        <div key={node.name} className={`relative ${level > 0 ? 'ml-6 md:ml-12 border-l-2 border-yellow-700/50 pl-6 md:pl-10 pb-6' : 'pb-8'}`}>
           
           {/* Connector horizontal line */}
           {level > 0 && (
@@ -217,13 +217,13 @@ export default function SilsilahPage() {
         {/* Tabs */}
         <div className="flex justify-center mb-12">
           <div className="bg-neutral-900 p-1 rounded-lg inline-flex border border-gray-800">
-            <button 
+            <button type="button" 
               onClick={() => setActiveTab("babad")}
               className={`px-6 py-3 rounded-md font-bold text-sm uppercase tracking-widest transition-all ${activeTab === 'babad' ? 'bg-yellow-500 text-black shadow-lg' : 'text-gray-400 hover:text-white'}`}
             >
               Versi Babad (Legenda)
             </button>
-            <button 
+            <button type="button" 
               onClick={() => setActiveTab("historis")}
               className={`px-6 py-3 rounded-md font-bold text-sm uppercase tracking-widest transition-all ${activeTab === 'historis' ? 'bg-yellow-500 text-black shadow-lg' : 'text-gray-400 hover:text-white'}`}
             >

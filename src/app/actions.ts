@@ -5,10 +5,10 @@ import { invalidateCache } from '@/lib/db';
 import { revalidatePath } from 'next/cache';
 import fs from 'fs';
 import path from 'path';
-import { headers } from 'next/headers';
+import { headers, cookies } from 'next/headers';
 import { validateCsrfToken } from '@/lib/csrf';
 
-const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+const ALLOWED_TYPES: readonly string[] = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'] as const;
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 async function requireCsrf() {
@@ -20,7 +20,17 @@ async function requireCsrf() {
   }
 }
 
+
+async function requireAuth() {
+  const cookieStore = await cookies();
+  const auth = cookieStore.get('admin-auth');
+  if (auth?.value !== 'true') {
+    throw new Error('Unauthorized');
+  }
+}
+
 export async function saveArticle(data: Article) {
+  await requireAuth();
   await requireCsrf();
   const articles = await getArticles();
   const existingIndex = articles.findIndex(a => a.id === data.id);
@@ -44,6 +54,7 @@ export async function saveArticle(data: Article) {
 }
 
 export async function deleteArticle(id: string) {
+  await requireAuth();
   await requireCsrf();
   let articles = await getArticles();
   articles = articles.filter(a => a.id !== id);
@@ -58,6 +69,7 @@ export async function deleteArticle(id: string) {
 }
 
 export async function uploadImage(formData: FormData) {
+  await requireAuth();
   await requireCsrf();
   const file = formData.get('file') as File;
   if (!file) {

@@ -5,12 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { getBookmarks, removeBookmark, Bookmark } from "@/lib/bookmarks";
 
-export default function BookmarksPage() {
-  const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+function getInitialBookmarks(): Bookmark[] {
+  if (typeof window === 'undefined') return [];
+  return getBookmarks();
+}
 
-  useEffect(() => {
-    setBookmarks(getBookmarks());
-  }, []);
+export default function BookmarksPage() {
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>(getInitialBookmarks);
 
   const handleRemove = (id: string) => {
     removeBookmark(id);
@@ -29,14 +30,14 @@ export default function BookmarksPage() {
             {bookmarks.map(bookmark => (
               <div key={bookmark.id} className="flex gap-4 p-4 bg-neutral-900 rounded-lg border border-gray-800">
                 <Link href={`/article/${bookmark.slug}`} className="flex-shrink-0 w-32 h-20 relative">
-                  <Image src={bookmark.coverImage} alt={bookmark.title} fill className="object-cover rounded" />
+                  <Image src={bookmark.coverImage} alt={bookmark.title} fill sizes="128px" className="object-cover rounded" />
                 </Link>
                 <div className="flex-1">
                   <Link href={`/article/${bookmark.slug}`} className="text-white font-bold hover:text-yellow-400">
                     {bookmark.title}
                   </Link>
                   <p className="text-sm text-gray-400 mt-1">{bookmark.category}</p>
-                  <button onClick={() => handleRemove(bookmark.id)} className="text-xs text-red-400 hover:text-red-300 mt-2">
+                  <button type="button" onClick={() => handleRemove(bookmark.id)} className="text-xs text-red-400 hover:text-red-300 mt-2">
                     Hapus
                   </button>
                 </div>

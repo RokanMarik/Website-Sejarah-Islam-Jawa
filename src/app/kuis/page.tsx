@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getQuestions } from '@/lib/quiz-data';
 import QuizClient from './QuizClient';
 import { getQuizResults } from '@/lib/quiz-db';
@@ -19,9 +20,9 @@ export default async function KuisPage() {
           <div className="text-center">
             <h1 className="text-4xl font-bold font-serif text-yellow-400 mb-4">Kuis Belum Tersedia</h1>
             <p className="text-gray-400">Admin belum memasukkan pertanyaan kuis. Silakan kembali lagi nanti.</p>
-            <a href="/" className="inline-block mt-8 px-6 py-3 border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-bold tracking-widest uppercase transition-colors">
+            <Link href="/" className="inline-block mt-8 px-6 py-3 border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-bold tracking-widest uppercase transition-colors">
               Kembali ke Beranda
-            </a>
+            </Link>
           </div>
         )}
       </main>

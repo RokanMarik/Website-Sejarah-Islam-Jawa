@@ -5,6 +5,12 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 
+const MOBILE_MENUS = [
+  { title: "Pengging", submenus: ["Perkembangan", "Konflik", "Tokoh", "Warisan"] },
+  { title: "Pajang", submenus: ["Perkembangan", "Konflik", "Tokoh", "Warisan"] },
+  { title: "Mataram", submenus: ["Perkembangan", "Konflik", "Tokoh", "Warisan"] },
+];
+
 export default function MobileMenu({
   isOpen,
   onClose,
@@ -16,19 +22,13 @@ export default function MobileMenu({
 
   if (!isOpen) return null;
 
-  const menus = [
-    { title: "Pengging", submenus: ["Perkembangan", "Konflik", "Tokoh", "Warisan"] },
-    { title: "Pajang", submenus: ["Perkembangan", "Konflik", "Tokoh", "Warisan"] },
-    { title: "Mataram", submenus: ["Perkembangan", "Konflik", "Tokoh", "Warisan"] },
-  ];
-
   return (
     <div className="fixed inset-0 z-[60] md:hidden">
-      <div className="absolute inset-0 bg-black/80" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/80" onClick={onClose} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && onClose()} aria-label="Tutup menu" />
       <div className="absolute right-0 top-0 h-full w-80 bg-neutral-950 border-l-2 border-yellow-400 overflow-y-auto">
         <div className="p-4 border-b border-gray-800 flex justify-between items-center">
           <span className="text-yellow-400 font-bold uppercase tracking-wider">Menu</span>
-          <button onClick={onClose} className="text-gray-400 hover:text-white">
+          <button type="button" onClick={onClose} className="text-gray-400 hover:text-white">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -39,12 +39,12 @@ export default function MobileMenu({
           <Link href="/" onClick={onClose} className="block py-2 text-white hover:text-yellow-400 font-bold uppercase">Beranda</Link>
 
           <div>
-            <button onClick={() => setExpandedKerajaan(expandedKerajaan ? null : "kerajaan")} className="w-full text-left py-2 text-yellow-400 hover:text-yellow-300 font-bold uppercase flex justify-between">
+            <button type="button" onClick={() => setExpandedKerajaan(expandedKerajaan ? null : "kerajaan")} className="w-full text-left py-2 text-yellow-400 hover:text-yellow-300 font-bold uppercase flex justify-between">
               Kerajaan Islam <span>{expandedKerajaan ? "▲" : "▼"}</span>
             </button>
             {expandedKerajaan && (
               <div className="pl-4 space-y-3 mt-2">
-                {menus.map(menu => (
+                {MOBILE_MENUS.map(menu => (
                   <div key={menu.title}>
                     <h4 className="text-white font-bold text-sm">{menu.title}</h4>
                     <ul className="pl-4 space-y-1 mt-1">

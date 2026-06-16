@@ -7,14 +7,14 @@ export default function BackToTop() {
 
   useEffect(() => {
     const toggle = () => setVisible(window.scrollY > 400);
-    window.addEventListener("scroll", toggle);
+    window.addEventListener("scroll", toggle, { passive: true });
     return () => window.removeEventListener("scroll", toggle);
   }, []);
 
   if (!visible) return null;
 
   return (
-    <button
+    <button type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className="fixed bottom-8 right-8 z-[100] w-12 h-12 bg-yellow-500 text-black rounded-full shadow-lg hover:bg-yellow-400 transition-all duration-300 flex items-center justify-center hover:scale-110"
       aria-label="Kembali ke atas"

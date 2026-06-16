@@ -10,13 +10,13 @@ export default function Analytics() {
     // Track page view (localStorage-based)
     const trackPageView = (path: string) => {
       try {
-        const views = JSON.parse(localStorage.getItem("page-views") || "{}");
+        const views = JSON.parse(localStorage.getItem("page-views:v1") || "{}");
         views[path] = (views[path] || 0) + 1;
         views["_total"] = (views["_total"] || 0) + 1;
-        localStorage.setItem("page-views", JSON.stringify(views));
+        localStorage.setItem("page-views:v1", JSON.stringify(views));
 
         // Track last visit
-        localStorage.setItem("last-visit", JSON.stringify({
+        localStorage.setItem("last-visit:v1", JSON.stringify({
           path,
           timestamp: Date.now(),
         }));

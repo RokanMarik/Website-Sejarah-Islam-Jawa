@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState("");
@@ -45,7 +46,7 @@ export default function AdminLoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Username</label>
+            <label htmlFor="login-username" className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Username</label>
             <input
               type="text"
               value={username}
@@ -56,7 +57,7 @@ export default function AdminLoginPage() {
           </div>
 
           <div>
-            <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Password</label>
+            <label htmlFor="login-password" className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Password</label>
             <input
               type="password"
               value={password}
@@ -68,7 +69,7 @@ export default function AdminLoginPage() {
 
           {error && <div className="text-red-400 text-sm text-center">{error}</div>}
 
-          <button
+          <button 
             type="submit"
             disabled={loading}
             className="w-full bg-yellow-500 text-black font-bold py-3 rounded-lg uppercase tracking-widest hover:bg-yellow-400 transition-colors disabled:opacity-50"
@@ -78,7 +79,7 @@ export default function AdminLoginPage() {
         </form>
 
         <div className="mt-6 text-center">
-          <a href="/" className="text-gray-500 hover:text-yellow-400 text-sm transition-colors">← Kembali ke Beranda</a>
+          <Link href="/" className="text-gray-500 hover:text-yellow-400 text-sm transition-colors">← Kembali ke Beranda</Link>
         </div>
       </div>
     </div>

@@ -52,7 +52,7 @@ export default function NewsletterForm() {
         className="flex-1 bg-black/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-yellow-400 outline-none transition-colors"
         required
       />
-      <button
+      <button 
         type="submit"
         disabled={status === "loading"}
         className="bg-yellow-500 text-black font-bold px-6 py-3 rounded-lg uppercase tracking-widest hover:bg-yellow-400 transition-colors disabled:opacity-50"

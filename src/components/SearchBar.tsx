@@ -30,12 +30,12 @@ export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [allArticles, setAllArticles] = useState<Article[]>([]);
+  const allArticlesRef = useRef<Article[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useEffect(() => {
-    setAllArticles(articlesData as Article[]);
+    allArticlesRef.current = (articlesData as Article[]);
   }, []);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function SearchBar() {
     const lowerQuery = query.toLowerCase();
     const matched: SearchResult[] = [];
 
-    for (const article of allArticles) {
+    for (const article of allArticlesRef.current) {
       const titleMatch = article.title.toLowerCase().includes(lowerQuery);
       const excerptMatch = article.excerpt.toLowerCase().includes(lowerQuery);
       const categoryMatch = article.category.toLowerCase().includes(lowerQuery);
@@ -73,7 +73,7 @@ export default function SearchBar() {
 
     setResults(matched);
     setIsOpen(true);
-  }, [query, allArticles]);
+  }, [query]);
 
   return (
     <div ref={searchRef} className="relative">
@@ -85,12 +85,11 @@ export default function SearchBar() {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Cari artikel..."
+          placeholder="Cari artikel..." aria-label="Cari artikel"
           className="bg-transparent text-sm text-gray-200 placeholder-gray-500 outline-none w-32 md:w-48"
-          aria-label="Search articles"
         />
         {query && (
-          <button onClick={() => setQuery("")} className="text-gray-500 hover:text-white">
+          <button type="button" onClick={() => setQuery("")} className="text-gray-500 hover:text-white" aria-label="Hapus pencarian">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -114,7 +113,7 @@ export default function SearchBar() {
               </Link>
             ))}
             {results.length > 5 && (
-              <button
+              <button type="button"
                 onClick={() => {
                   router.push(`/pencarian?q=${encodeURIComponent(query)}`);
                   setQuery("");

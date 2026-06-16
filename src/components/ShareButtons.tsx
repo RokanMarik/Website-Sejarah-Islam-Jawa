@@ -65,9 +65,9 @@ export default function ShareButtons({ title, slug }: ShareButtonsProps) {
             <span className="text-xs uppercase tracking-wider hidden sm:inline">{link.name}</span>
           </a>
         ))}
-        <button
+        <button type="button"
           onClick={handleCopy}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-700 rounded-full text-gray-400 hover:bg-yellow-500 hover:border-yellow-500 hover:text-black transition-all"
+          className="flex items-center gap-2 px-4 py-2 border border-gray-700 rounded-full text-black hover:bg-yellow-500 hover:border-yellow-500 transition-all"
           aria-label="Copy link"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

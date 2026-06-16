@@ -18,26 +18,28 @@ const themeLabels: Record<Theme, string> = {
   sepia: "Naskah Kuno",
 };
 
+const applyTheme = (t: Theme) => {
+  document.body.classList.remove("theme-sepia", "theme-light");
+  if (t === "sepia") {
+    document.body.classList.add("theme-sepia");
+  } else if (t === "light") {
+    document.body.classList.add("theme-light");
+  }
+};
+
+function getInitialTheme(): Theme {
+  if (typeof window === 'undefined') return 'dark';
+  return (localStorage.getItem('theme') as Theme) || 'dark';
+}
+
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const saved = localStorage.getItem("theme") as Theme | null;
-    const initial = saved || "dark";
-    applyTheme(initial);
-    setTheme(initial);
-  }, []);
-
-  const applyTheme = (t: Theme) => {
-    document.body.classList.remove("theme-sepia", "theme-light");
-    if (t === "sepia") {
-      document.body.classList.add("theme-sepia");
-    } else if (t === "light") {
-      document.body.classList.add("theme-light");
-    }
-  };
+    applyTheme(theme);
+  }, [theme]);
 
   const toggleTheme = () => {
     const idx = themes.indexOf(theme);
@@ -50,7 +52,7 @@ export default function ThemeToggle() {
   if (!mounted) return null;
 
   return (
-    <button
+    <button type="button"
       onClick={toggleTheme}
       className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-700 hover:border-yellow-400 transition-colors text-sm"
       title={themeLabels[theme]}

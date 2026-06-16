@@ -4,12 +4,7 @@ import { useState } from 'react';
 import { Question } from '@/lib/quiz-data';
 import { saveQuizQuestion, deleteQuizQuestion } from '@/app/quizActions';
 
-export default function QuizAdminClient({ initialQuestions }: { initialQuestions: Question[] }) {
-  const [questions, setQuestions] = useState<Question[]>(initialQuestions);
-  const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
-  const [isSaving, setIsSaving] = useState(false);
-
-  const emptyQuestion: Question = {
+const emptyQuestion: Question = {
     id: '',
     text: '',
     options: ['', '', '', ''],
@@ -17,6 +12,12 @@ export default function QuizAdminClient({ initialQuestions }: { initialQuestions
     category: ''
   };
 
+export default function QuizAdminClient({ initialQuestions }: { initialQuestions: Question[] }) {
+  const [questions, setQuestions] = useState<Question[]>(initialQuestions);
+  const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  
   const handleEdit = (question: Question) => {
     setEditingQuestion({ ...question, options: [...question.options] });
   };
@@ -80,7 +81,7 @@ export default function QuizAdminClient({ initialQuestions }: { initialQuestions
       <div className="w-full lg:w-1/3 bg-white p-6 rounded-xl shadow border border-gray-200">
         <div className="flex justify-between items-center mb-6">
           <h3 className="font-bold text-lg">Daftar Soal</h3>
-          <button 
+          <button type="button" 
             onClick={handleAddNew}
             className="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition"
           >
@@ -115,7 +116,7 @@ export default function QuizAdminClient({ initialQuestions }: { initialQuestions
             
             <div className="space-y-6">
               <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700">Pertanyaan</label>
+                <label htmlFor="quiz-question" className="block text-sm font-semibold text-gray-700">Pertanyaan</label>
                 <textarea 
                   required
                   rows={3}
@@ -173,8 +174,8 @@ export default function QuizAdminClient({ initialQuestions }: { initialQuestions
 
             <div className="mt-8 pt-6 border-t border-gray-100 flex justify-between">
               {editingQuestion.id ? (
-                <button 
-                  type="button" 
+                <button type="button" 
+                   
                   onClick={() => handleDelete(editingQuestion.id!)}
                   className="px-4 py-2 text-red-600 font-medium hover:bg-red-50 rounded-lg transition"
                 >
@@ -183,8 +184,8 @@ export default function QuizAdminClient({ initialQuestions }: { initialQuestions
               ) : <div></div>}
               
               <div className="flex gap-3">
-                <button 
-                  type="button" 
+                <button type="button" 
+                   
                   onClick={handleCancel}
                   className="px-6 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg transition"
                 >

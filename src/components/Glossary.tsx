@@ -71,6 +71,8 @@ export default function Glossary({ content }: { content: string }) {
         dangerouslySetInnerHTML={createMarkup()}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
+        onFocus={handleMouseOver}
+        onBlur={handleMouseOut}
       />
       
       {/* Tooltip Portal rendered fixed on screen */}

@@ -20,7 +20,7 @@ export default function ArticleList({ articles }: { articles: Article[] }) {
       </div>
 
       {remaining > 0 && (
-        <button
+        <button type="button"
           onClick={() => setVisibleCount(prev => prev + ARTICLES_PER_PAGE)}
           className="w-full py-3 mt-8 border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black font-bold uppercase tracking-wider transition-colors rounded-lg"
         >

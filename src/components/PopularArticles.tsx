@@ -13,25 +13,31 @@ interface Article {
   date: string;
 }
 
+import Image from "next/image";
+
+interface Article {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  coverImage: string;
+  category: string;
+  date: string;
+}
+
+function getPopular(articles: Article[]): (Article & { viewCount: number })[] {
+  if (typeof window === 'undefined') return articles.slice(0, 3).map(a => ({ ...a, viewCount: 0 }));
+  const views: Record<string, number> = JSON.parse(localStorage.getItem("page-views:v1") || "{}");
+  const scored = articles.map(article => ({
+    ...article,
+    viewCount: views[`/article/${article.slug}`] || 0,
+  }));
+  const sorted = scored.sort((a, b) => b.viewCount - a.viewCount).slice(0, 3).filter(a => a.viewCount > 0);
+  return sorted.length > 0 ? sorted : articles.slice(0, 3).map(a => ({ ...a, viewCount: 0 }));
+}
+
 export default function PopularArticles({ articles }: { articles: Article[] }) {
-  const [popular, setPopular] = useState<Article[]>([]);
-
-  useEffect(() => {
-    const views: Record<string, number> = JSON.parse(localStorage.getItem("page-views") || "{}");
-    
-    const scored = articles.map(article => {
-      const path = `/article/${article.slug}`;
-      return { ...article, viewCount: views[path] || 0 };
-    });
-
-    const sorted = scored
-      .sort((a, b) => b.viewCount - a.viewCount)
-      .slice(0, 3)
-      .filter(a => a.viewCount > 0);
-
-    // If no views yet, show recent articles
-    setPopular(sorted.length > 0 ? sorted : articles.slice(0, 3));
-  }, [articles]);
+  const popular = getPopular(articles);
 
   if (popular.length === 0) return null;
 
@@ -49,9 +55,11 @@ export default function PopularArticles({ articles }: { articles: Article[] }) {
               className="group block bg-neutral-900 border border-gray-800 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300 hover:-translate-y-1"
             >
               <div className="relative">
-                <img
+                <Image
                   src={article.coverImage}
                   alt={article.title}
+                  width={400}
+                  height={192}
                   className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-3 left-3 bg-black/80 text-yellow-400 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">

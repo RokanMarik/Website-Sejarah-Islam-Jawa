@@ -54,7 +54,7 @@ export default function KamusSearch() {
             className="bg-transparent text-gray-200 placeholder-gray-500 outline-none flex-1"
           />
           {query && (
-            <button onClick={() => setQuery("")} className="text-gray-500 hover:text-white shrink-0">
+            <button type="button" onClick={() => setQuery("")} aria-label="Hapus pencarian" className="text-gray-500 hover:text-white shrink-0">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -66,7 +66,7 @@ export default function KamusSearch() {
       {/* Era Filter */}
       <div className="flex flex-wrap gap-2 mb-8">
         {eras.map(era => (
-          <button
+          <button type="button"
             key={era}
             onClick={() => setActiveEra(era)}
             className={`px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all ${

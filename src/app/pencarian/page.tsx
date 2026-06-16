@@ -43,10 +43,10 @@ function SearchResultsInner() {
     };
 
     // Save to recent searches
-    const recent = JSON.parse(localStorage.getItem("recent-searches") || "[]");
+    const recent = JSON.parse(localStorage.getItem("recent-searches:v1") || "[]");
     const filtered = recent.filter((s: string) => s !== q);
     filtered.unshift(q);
-    localStorage.setItem("recent-searches", JSON.stringify(filtered.slice(0, 5)));
+    localStorage.setItem("recent-searches:v1", JSON.stringify(filtered.slice(0, 5)));
 
     fetchResults();
   }, [q]);
@@ -139,11 +139,10 @@ function SearchResultsInner() {
 }
 
 function RecentSearches() {
-  const [recent, setRecent] = useState<string[]>([]);
-
-  useEffect(() => {
-    setRecent(JSON.parse(localStorage.getItem("recent-searches") || "[]"));
-  }, []);
+  const [recent, setRecent] = useState<string[]>(() => {
+    if (typeof window === "undefined") return [];
+    try { return JSON.parse(localStorage.getItem("recent-searches:v1") || "[]"); } catch { return []; }
+  });
 
   if (recent.length === 0) return null;
 
@@ -151,9 +150,9 @@ function RecentSearches() {
     <div className="mt-12 pt-8 border-t border-gray-800">
       <h3 className="text-sm uppercase tracking-widest text-gray-500 mb-4">Pencarian Terakhir</h3>
       <div className="flex flex-wrap gap-2">
-        {recent.map((s, i) => (
+        {recent.map((s) => (
           <Link
-            key={i}
+            key={s}
             href={`/pencarian?q=${encodeURIComponent(s)}`}
             className="px-3 py-1.5 bg-neutral-900 border border-gray-700 rounded-full text-sm text-gray-400 hover:text-yellow-400 hover:border-yellow-400 transition-colors"
           >

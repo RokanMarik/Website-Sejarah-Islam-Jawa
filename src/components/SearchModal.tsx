@@ -19,6 +19,8 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -30,12 +32,12 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        isOpen ? onClose() : document.getElementById("search-trigger")?.click();
+        isOpen ? onCloseRef.current() : document.getElementById("search-trigger")?.click();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   useEffect(() => {
     if (query.length < 2) {
@@ -58,7 +60,7 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
 
   return (
     <div className="fixed inset-0 z-[70] flex items-start justify-center pt-24 px-4">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} role="button" tabIndex={-1} onKeyDown={(e) => e.key === 'Escape' && onClose()} aria-label="Tutup pencarian" />
       <div className="relative w-full max-w-2xl bg-neutral-900 border border-gray-700 rounded-xl shadow-2xl overflow-hidden">
         <div className="flex items-center border-b border-gray-700">
           <svg className="w-5 h-5 text-gray-400 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,6 +73,7 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Cari artikel sejarah..."
             className="w-full bg-transparent text-white placeholder-gray-500 px-4 py-4 outline-none"
+            aria-label="Cari artikel"
           />
           <kbd className="mr-4 px-2 py-1 text-xs text-gray-400 bg-gray-800 rounded">ESC</kbd>
         </div>

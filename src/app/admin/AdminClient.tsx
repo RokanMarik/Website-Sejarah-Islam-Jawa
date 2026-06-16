@@ -16,7 +16,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
   const editorRef = useRef(null);
 
   // Default empty article template
-  const newArticleTemplate: Article = {
+  const NEW_ARTICLE_TEMPLATE: Article = {
     id: '',
     slug: '',
     title: '',
@@ -38,7 +38,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
   };
 
   const handleCreateNew = () => {
-    setEditingArticle({ ...newArticleTemplate });
+    setEditingArticle({ ...NEW_ARTICLE_TEMPLATE });
   };
 
   const handleCancel = () => {
@@ -79,16 +79,17 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
     setIsSaving(true);
     
     // Auto generate slug if empty
-    if (!editingArticle.slug) {
-      editingArticle.slug = editingArticle.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    const articleToSave = { ...editingArticle };
+    if (!articleToSave.slug) {
+      articleToSave.slug = articleToSave.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
     }
 
     try {
-      await saveArticle(editingArticle);
+      await saveArticle(articleToSave);
       
       // Update local state
-      if (editingArticle.id) {
-        setArticles(articles.map(a => a.id === editingArticle.id ? editingArticle : a));
+      if (articleToSave.id) {
+        setArticles(articles.map(a => a.id === articleToSave.id ? articleToSave : a));
       } else {
         // If it was new, we don't have the exact generated ID here, so we reload to be safe or just redirect
         window.location.reload();
@@ -127,18 +128,18 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
         <div className="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
           <h2 className="text-2xl font-bold text-gray-900">{editingArticle.id ? 'Edit Artikel' : 'Tulis Artikel Baru'}</h2>
-          <button onClick={handleCancel} className="text-gray-500 hover:text-gray-800 transition-colors">Batal</button>
+          <button type="button" onClick={handleCancel} className="text-gray-500 hover:text-gray-800 transition-colors">Batal</button>
         </div>
         
         <form onSubmit={handleSave} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Judul Artikel</label>
+              <label htmlFor="article-title" className="block text-sm font-semibold text-gray-700">Judul Artikel</label>
               <input 
                 type="text" 
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                value={editingArticle.title}
+                id="article-title" value={editingArticle.title}
                 onChange={e => setEditingArticle({...editingArticle, title: e.target.value})}
               />
             </div>
@@ -148,7 +149,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
               <select 
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
-                value={editingArticle.category}
+                id="article-category" value={editingArticle.category}
                 onChange={e => setEditingArticle({...editingArticle, category: e.target.value})}
               >
                 <option value="Kerajaan Demak">Kerajaan Demak</option>
@@ -194,7 +195,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
               <label className="block text-sm font-semibold text-gray-700">Sub-Kategori (Opsional)</label>
               <select 
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
-                value={editingArticle.subcategory || ''}
+                id="article-subcategory" value={editingArticle.subcategory || ''}
                 onChange={e => setEditingArticle({...editingArticle, subcategory: e.target.value})}
               >
                 <option value="">-- Tidak Ada --</option>
@@ -206,14 +207,15 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Gambar Sampul (Upload dari Komputer .png, .webp, .jpg)</label>
+              <label htmlFor="article-upload" className="block text-sm font-semibold text-gray-700">Gambar Sampul (Upload dari Komputer .png, .webp, .jpg)</label>
               <div className="flex gap-4 items-center">
                 <input 
                   type="file" 
+                  id="article-upload" aria-label="Upload gambar sampul" 
                   accept="image/png, image/webp, image/jpeg, image/jpg"
                   onChange={handleFileUpload}
                   disabled={isUploading}
-                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors"
+                  className="block w-full text-sm text-blue-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors"
                 />
                 {isUploading && <span className="text-sm text-blue-600 font-bold">Mengunggah...</span>}
               </div>
@@ -230,7 +232,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
                 type="text" 
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                value={editingArticle.readTime}
+                id="article-readtime" value={editingArticle.readTime}
                 onChange={e => setEditingArticle({...editingArticle, readTime: e.target.value})}
               />
             </div>
@@ -241,7 +243,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
                 type="text" 
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                value={editingArticle.author}
+                id="article-author" value={editingArticle.author}
                 onChange={e => setEditingArticle({...editingArticle, author: e.target.value})}
               />
             </div>
@@ -252,7 +254,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
                 type="text" 
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                value={editingArticle.date}
+                id="article-date" value={editingArticle.date}
                 onChange={e => setEditingArticle({...editingArticle, date: e.target.value})}
               />
             </div>
@@ -336,8 +338,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
           </div>
 
           <div className="flex justify-end gap-4 pt-6 border-t border-gray-100">
-            <button 
-              type="button" 
+            <button type="button"
               onClick={handleCancel}
               className="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
             >
@@ -360,7 +361,7 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
     <div>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold text-gray-800">Daftar Artikel</h2>
-        <button 
+        <button type="button" 
           onClick={handleCreateNew}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors font-medium text-sm flex items-center gap-2"
         >
@@ -406,14 +407,14 @@ export default function AdminClient({ initialArticles }: { initialArticles: Arti
                 </td>
                 <td className="p-4 text-right">
                   <div className="flex items-center justify-end gap-2">
-                    <button 
+                    <button type="button" 
                       onClick={() => handleEdit(article)}
                       className="p-2 text-blue-600 hover:bg-blue-50 rounded transition-colors"
                       title="Edit"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                     </button>
-                    <button 
+                    <button type="button" 
                       onClick={() => handleDelete(article.id)}
                       className="p-2 text-red-600 hover:bg-red-50 rounded transition-colors"
                       title="Hapus"
