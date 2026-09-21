@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 
 const javaCoastline = "M120,150 C150,140 180,150 220,155 C250,160 280,140 290,120 C300,100 330,110 350,130 C380,150 430,140 460,150 C490,160 520,170 510,190 C500,210 460,210 420,200 C380,190 350,220 310,210 C270,200 240,180 200,190 C160,200 130,190 120,170 Z";
@@ -80,7 +80,7 @@ export default function JavaMap() {
   const [hoveredRegion, setHoveredRegion] = useState<{ name: string; x: number; y: number } | null>(null);
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const isDraggingRef = useRef(false);
+  const [isDragging, setIsDragging] = useState(false);
   const dragStartRef = useRef({ x: 0, y: 0 });
   const currentEra = eras[activeEraIndex];
 
@@ -148,10 +148,10 @@ export default function JavaMap() {
             viewBox="0 0 600 300" 
             className="w-full h-full transition-transform duration-200" 
             style={{ transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`, cursor: isDragging ? 'grabbing' : 'grab' }}
-            onMouseDown={(e) => { isDraggingRef.current = true); dragStartRef.current = { x: e.clientX - position.x * scale, y: e.clientY - position.y * scale }); }}
-            onMouseMove={(e) => { if (isDraggingRef.current) setPosition({ x: (e.clientX - dragStartRef.current.x) / scale, y: (e.clientY - dragStartRef.current.y) / scale }); }}
-            onMouseUp={() => isDraggingRef.current = false)}
-            onMouseLeave={() => { isDraggingRef.current = false); setHoveredRegion(null); }}
+            onMouseDown={(e) => { setIsDragging(true); dragStartRef.current = { x: e.clientX - position.x * scale, y: e.clientY - position.y * scale }; }}
+            onMouseMove={(e) => { if (isDragging) setPosition({ x: (e.clientX - dragStartRef.current.x) / scale, y: (e.clientY - dragStartRef.current.y) / scale }); }}
+            onMouseUp={() => setIsDragging(false)}
+            onMouseLeave={() => { setIsDragging(false); setHoveredRegion(null); }}
           >
             <defs>
               <filter id="paperTexture">

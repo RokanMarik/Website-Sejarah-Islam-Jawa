@@ -1,12 +1,12 @@
 'use client';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 export default function DiscoveryMode({ event, onUnlock }: { event: any, onUnlock: (id: number) => void }) {
   const [solved, setSolved] = useState(false);
   const answerRef = useRef("");
 
   const handleCheck = () => {
-    if (answerRef.current.toLowerCase().includes(event.quiz.answerRef.current.toLowerCase())) {
+    if (answerRef.current.toLowerCase().includes(event.quiz.answer.toLowerCase())) {
       setSolved(true);
       onUnlock(event.id);
     } else {

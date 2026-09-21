@@ -54,7 +54,7 @@ export default function Timeline() {
 
           <div className="space-y-8">
             {(showAll ? events : events.slice(0, 3)).map((event, index) => (
-              <div key={event.id || event.year || index} className="relative flex flex-col md:flex-row items-start md:items-center group">
+              <div key={event.year || index} className="relative flex flex-col md:flex-row items-start md:items-center group">
                 
                 {/* Dot */}
                 <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-black border-2 border-yellow-500 md:-translate-x-1/2 mt-1.5 md:mt-0 z-10 group-hover:scale-150 group-hover:bg-yellow-500 transition-all duration-300 shadow-[0_0_10px_rgba(234,179,8,0)]"></div>
@@ -62,10 +62,10 @@ export default function Timeline() {
                 {/* Content */}
                 <div className={`w-full pl-14 md:pl-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:ml-auto md:text-left'}`}>
                   
-                  {mode === 'discovery' && event.locked ? (
+                  {mode === 'discovery' && event.locked && !unlockedIds.includes(index) ? (
                     <DiscoveryMode 
-                      event={{...event, quiz: { question: event.quiz.q, answer: event.quiz.a }}} 
-                      onUnlock={(id) => unlockedIdsRef.current = (prev => [...prev, id])} 
+                      event={{ ...event, id: index, description: event.desc, quiz: { question: event.quiz.q, answer: event.quiz.a } }} 
+                      onUnlock={(id: number) => setUnlockedIds(prev => [...prev, id])} 
                     />
                   ) : (
                     <div className="bg-neutral-900 border border-gray-800 p-6 rounded-xl shadow-lg group-hover:border-yellow-600 transition-colors duration-300">

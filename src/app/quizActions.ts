@@ -82,7 +82,7 @@ export async function submitQuizResult(playerName: string, score: number, totalQ
     result = saveResult({ playerName, score, totalQuestions });
     revalidatePath('/admin/quiz/results');
   } catch (e) {
-    after(() => after(() => console.log("Local save failed (expected on Vercel):", e));
+    after(() => console.log("Local save failed (expected on Vercel):", e));
   }
   
   return result || { success: true };

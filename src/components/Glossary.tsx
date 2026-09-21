@@ -23,14 +23,14 @@ export default function Glossary({ content }: { content: string }) {
       const regex = new RegExp(`\\b(${term})\\b(?![^<]*>)`, 'gi');
       html = html.replace(regex, `<span class="glossary-term cursor-help border-b border-dashed border-yellow-500 text-yellow-500 font-bold hover:bg-yellow-500/10 transition-colors" data-term="${term}">$1</span>`);
     });
-    // Sanitize the final HTML to prevent XSS — the content prop could
-    // contain attacker-controlled markup, and DOMPurify strips dangerous
-    // elements/attributes while preserving safe HTML structure.
-    html = DOMPurify.sanitize(html);
+    // Sanitize the final HTML to prevent XSS — guarded for SSR/prerender
+    if (typeof DOMPurify !== 'undefined' && typeof DOMPurify?.sanitize === 'function') {
+      html = DOMPurify.sanitize(html);
+    }
     return { __html: html };
   };
 
-  const handleMouseOver = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseOver = (e: React.SyntheticEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     if (target.classList.contains('glossary-term')) {
       const termKey = target.getAttribute('data-term')?.toLowerCase();
@@ -57,7 +57,7 @@ export default function Glossary({ content }: { content: string }) {
     }
   };
 
-  const handleMouseOut = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseOut = (e: React.SyntheticEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     if (target.classList.contains('glossary-term')) {
       setActiveTerm(null);

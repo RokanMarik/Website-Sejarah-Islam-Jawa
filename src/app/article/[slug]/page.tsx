@@ -161,7 +161,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 </div>
                 <ol className="space-y-3 text-xs text-gray-400 font-serif leading-relaxed">
                   {article.references.map((ref, i) => (
-                    <li key={tag || i} className="pl-4 -indent-4">
+                    <li key={ref || i} className="pl-4 -indent-4">
                       <span className="text-yellow-600 mr-1">{i + 1}.</span>
                       {ref}
                     </li>
@@ -203,7 +203,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 </h3>
                 <ol className="space-y-4 text-sm text-gray-400 font-serif leading-relaxed">
                   {article.references.map((ref, i) => (
-                    <li key={tag || i} className="pl-6 -indent-6 pb-4 border-b border-gray-900 last:border-0">
+                    <li key={ref || i} className="pl-6 -indent-6 pb-4 border-b border-gray-900 last:border-0">
                       <span className="text-yellow-600 font-bold mr-2">{i + 1}.</span>
                       {ref}
                     </li>

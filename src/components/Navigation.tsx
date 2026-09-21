@@ -52,7 +52,7 @@ export default function Navigation() {
                     <div key={menu.title}>
                       <h4 className="text-yellow-400 font-bold mb-4 pb-2 border-b border-gray-800 text-lg font-serif">{menu.title}</h4>
                       <ul className="space-y-3">
-                        {menu.subMENUS.map(sub => (
+                        {menu.submenus.map((sub: string) => (
                           <li key={sub}>
                             <Link href={`/kategori/${menu.title.toLowerCase()}/${sub.toLowerCase()}`} className="text-gray-300 hover:text-white hover:underline text-xs tracking-wider transition-all">
                               {sub}
